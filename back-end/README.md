@@ -1,5 +1,3 @@
-# Capstone: Restaurant Reservation System Backend
-
-This starter code for the backend of the capstone project in the Thinkful curriculum.
+# Restaurant Reservation System Backend
 
 See [../README.md](../README.md) for detailed instructions.
