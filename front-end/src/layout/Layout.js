@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Menu from "./Menu";
 import Routes from "./Routes";
+import ErrorAlert from "./ErrorAlert";
 
 import "./Layout.css";
 
@@ -12,6 +13,14 @@ import "./Layout.css";
  * @returns {JSX.Element}
  */
 function Layout() {
+  const [errors, setErrors] = useState(null);
+
+  const errorHandler = (foundErrors) => {
+    if (foundErrors) {
+      setErrors(foundErrors);
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row h-100">
@@ -19,7 +28,8 @@ function Layout() {
           <Menu />
         </div>
         <div className="col">
-          <Routes />
+          <ErrorAlert error={errors} />
+          <Routes errorHandler={errorHandler} />
         </div>
       </div>
     </div>

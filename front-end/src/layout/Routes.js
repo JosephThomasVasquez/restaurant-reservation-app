@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
+import ReservationForm from "../reservations/ReservationForm";
 
 /**
  * Defines all the routes for the application.
@@ -12,7 +13,7 @@ import { today } from "../utils/date-time";
  *
  * @returns {JSX.Element}
  */
-function Routes() {
+function Routes({ errorHandler }) {
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -23,6 +24,9 @@ function Routes() {
       </Route>
       <Route path="/dashboard">
         <Dashboard date={today()} />
+      </Route>
+      <Route path="/reservations/new">
+        <ReservationForm errorHandler={errorHandler} />
       </Route>
       <Route>
         <NotFound />
