@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { createReservation } from "../utils/api";
 
 const ReservationForm = () => {
+  const [reservation, setReservation] = useState({});
+
+  const handleChange = ({ target }) => {
+    setReservation({ ...reservation, [target.name]: target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await createReservation(reservation);
+
+    console.log(response);
+    setReservation(response);
+  };
+
   return (
     <div>
       <div className="row">
@@ -9,7 +25,7 @@ const ReservationForm = () => {
         </div>
       </div>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-3">
             <label htmlFor="first_name" className="form-label">
@@ -22,6 +38,7 @@ const ReservationForm = () => {
               id="first_name"
               placeholder="First name"
               className="form-control"
+              onChange={handleChange}
             />
           </div>
 
@@ -35,6 +52,7 @@ const ReservationForm = () => {
               id="last_name"
               placeholder="Last name"
               className="form-control"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -50,6 +68,7 @@ const ReservationForm = () => {
               id="mobile_number"
               placeholder="(123)-456-7890"
               className="form-control"
+              onChange={handleChange}
             />
           </div>
 
@@ -65,6 +84,7 @@ const ReservationForm = () => {
               id="people"
               placeholder="1"
               className="form-control"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -80,6 +100,7 @@ const ReservationForm = () => {
               id="reservation_date"
               placeholder="MM/DD/YYYY"
               className="form-control"
+              onChange={handleChange}
             />
           </div>
 
@@ -93,6 +114,7 @@ const ReservationForm = () => {
               id="reservation_time"
               placeholder="12:00"
               className="form-control"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -106,6 +128,7 @@ const ReservationForm = () => {
           </div>
         </div>
       </form>
+      <div>{JSON.stringify(reservation)}</div>
     </div>
   );
 };
