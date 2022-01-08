@@ -13,7 +13,7 @@ import ReservationForm from "../reservations/ReservationForm";
  *
  * @returns {JSX.Element}
  */
-function Routes() {
+function Routes({ errorHandler }) {
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -26,7 +26,7 @@ function Routes() {
         <Dashboard date={today()} />
       </Route>
       <Route path="/reservations/new">
-        <ReservationForm />
+        <ReservationForm errorHandler={errorHandler} />
       </Route>
       <Route>
         <NotFound />

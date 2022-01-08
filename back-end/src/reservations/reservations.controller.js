@@ -15,16 +15,17 @@ const hasValidProperties = (req, res, next) => {
       message: `Data from the request body is missing.`,
     });
 
-  const requiredProperties = Object.keys(req.body.data);
+  const invalidProperties = [];
 
-  const missingProperties = requiredProperties.filter((property) => {
-    !requiredProperties.includes(property);
-  });
+  // Check properties
+  for (let property in req.body.data) {
+    !req.body.data[property] && invalidProperties.push(property);
+  }
 
-  console.log("missingProperties", missingProperties);
+  // console.log("invalidProperties", invalidProperties);
 
-  if (missingProperties.length) {
-    return next({ status: 400, message: `${missingProperties} is required.` });
+  if (invalidProperties.length) {
+    return next({ status: 400, message: `${invalidProperties} is required.` });
   }
 
   next();

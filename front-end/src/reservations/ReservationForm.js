@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
 
-const ReservationForm = ({ error }) => {
+const ReservationForm = ({ errorHandler }) => {
   const history = useHistory();
 
+  //   Set today's date as a default value for reservation state in the correct format yyyy/mm/dd
   const today = new Date().toISOString().split("T")[0];
-  console.log(today);
+
   const initialFormFData = {
     first_name: "",
     last_name: "",
@@ -17,6 +18,7 @@ const ReservationForm = ({ error }) => {
   };
 
   const [reservation, setReservation] = useState(initialFormFData);
+  const [errors, setErrors] = useState(null);
 
   const handleChange = ({ target }) => {
     setReservation({ ...reservation, [target.name]: target.value });
@@ -27,6 +29,7 @@ const ReservationForm = ({ error }) => {
 
     const submitReservation = async () => {
       const abortController = new AbortController();
+      setErrors(null);
 
       try {
         //   Send a POST request of the reservation to the backend
@@ -35,9 +38,14 @@ const ReservationForm = ({ error }) => {
           abortController.abort()
         );
 
-        console.log("response", response);
+        console.log("response", response.data);
         setReservation(response);
-      } catch (error) {}
+        console.log("reservation:", reservation);
+        history.push(`/dashboard?=${reservation.reservation_date}`);
+      } catch (error) {
+        errorHandler(error);
+        console.log("error:", error);
+      }
     };
 
     submitReservation();
@@ -70,7 +78,6 @@ const ReservationForm = ({ error }) => {
               className="form-control"
               onChange={handleChange}
               value={reservation?.first_name}
-              required
             />
           </div>
 
@@ -86,7 +93,6 @@ const ReservationForm = ({ error }) => {
               className="form-control"
               onChange={handleChange}
               value={reservation?.last_name}
-              required
             />
           </div>
         </div>
@@ -104,7 +110,6 @@ const ReservationForm = ({ error }) => {
               className="form-control"
               onChange={handleChange}
               value={reservation?.mobile_number}
-              required
             />
           </div>
 
@@ -122,7 +127,6 @@ const ReservationForm = ({ error }) => {
               className="form-control"
               onChange={handleChange}
               value={reservation?.people}
-              required
             />
           </div>
         </div>
@@ -140,7 +144,6 @@ const ReservationForm = ({ error }) => {
               className="form-control"
               onChange={handleChange}
               value={reservation?.reservation_date}
-              required
             />
           </div>
 
@@ -156,7 +159,6 @@ const ReservationForm = ({ error }) => {
               className="form-control"
               onChange={handleChange}
               value={reservation?.reservation_time}
-              required
             />
           </div>
         </div>
