@@ -36,7 +36,10 @@ const hasValidProperties = (req, res, next) => {
       /GET
  */
 const list = async (req, res) => {
-  const data = await reservationsService.list();
+  // get reservations by date query
+  const date = req.query.date;
+
+  const data = await reservationsService.list(date);
 
   res.json({ data });
 };

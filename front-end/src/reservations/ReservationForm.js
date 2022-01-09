@@ -8,7 +8,7 @@ const ReservationForm = ({ errorHandler }) => {
   //   Set today's date as a default value for reservation state in the correct format yyyy/mm/dd
   const today = new Date().toISOString().split("T")[0];
 
-  const initialFormFData = {
+  const initialFormData = {
     first_name: "",
     last_name: "",
     mobile_number: "",
@@ -17,7 +17,7 @@ const ReservationForm = ({ errorHandler }) => {
     reservation_time: "12:00",
   };
 
-  const [reservation, setReservation] = useState(initialFormFData);
+  const [reservation, setReservation] = useState(initialFormData);
 
   const handleChange = ({ target }) => {
     console.log("For initial commit frontend");
