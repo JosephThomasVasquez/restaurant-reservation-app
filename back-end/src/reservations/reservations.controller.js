@@ -16,6 +16,7 @@ const hasValidProperties = (req, res, next) => {
     });
 
   const invalidProperties = [];
+  console.log("For initial commit backend");
 
   // Check properties
   for (let property in req.body.data) {
