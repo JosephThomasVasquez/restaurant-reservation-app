@@ -20,6 +20,7 @@ const ReservationForm = ({ errorHandler }) => {
   const [reservation, setReservation] = useState(initialFormFData);
 
   const handleChange = ({ target }) => {
+    console.log("For initial commit frontend");
     setReservation({ ...reservation, [target.name]: target.value });
   };
 
