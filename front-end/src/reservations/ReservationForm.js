@@ -18,7 +18,6 @@ const ReservationForm = ({ errorHandler }) => {
   };
 
   const [reservation, setReservation] = useState(initialFormFData);
-  const [errors, setErrors] = useState(null);
 
   const handleChange = ({ target }) => {
     setReservation({ ...reservation, [target.name]: target.value });
@@ -29,7 +28,7 @@ const ReservationForm = ({ errorHandler }) => {
 
     const submitReservation = async () => {
       const abortController = new AbortController();
-      setErrors(null);
+      //   errorHandler();
 
       try {
         //   Send a POST request of the reservation to the backend
@@ -38,13 +37,13 @@ const ReservationForm = ({ errorHandler }) => {
           abortController.abort()
         );
 
-        console.log("response", response.data);
+        // console.log("response", response.data);
         setReservation(response);
         console.log("reservation:", reservation);
         history.push(`/dashboard?=${reservation.reservation_date}`);
       } catch (error) {
-        errorHandler(error);
-        console.log("error:", error);
+        error && errorHandler(error);
+        // console.log("error:", error);
       }
     };
 
@@ -59,13 +58,13 @@ const ReservationForm = ({ errorHandler }) => {
     <div>
       <div className="row">
         <div className="col">
-          <h2>Create Reservation</h2>
+          <h1>Create Reservation</h1>
         </div>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 mb-3">
             <label htmlFor="first_name" className="form-label">
               First Name
             </label>
@@ -81,7 +80,7 @@ const ReservationForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3">
+          <div className="col-3 mb-3">
             <label htmlFor="last_name" className="form-label">
               Last Name
             </label>
@@ -98,7 +97,7 @@ const ReservationForm = ({ errorHandler }) => {
         </div>
 
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 mb-3">
             <label htmlFor="mobile_number" className="form-label">
               Mobile Number
             </label>
@@ -113,7 +112,7 @@ const ReservationForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3">
+          <div className="col-3 mb-3">
             <label htmlFor="people" className="form-label">
               Number of Guests
             </label>
@@ -132,7 +131,7 @@ const ReservationForm = ({ errorHandler }) => {
         </div>
 
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 mb-3">
             <label htmlFor="reservation_date" className="form-label">
               Reservation Date
             </label>
@@ -147,7 +146,7 @@ const ReservationForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3">
+          <div className="col-3 mb-3">
             <label htmlFor="reservation_time" className="form-label">
               Reservation Time
             </label>
