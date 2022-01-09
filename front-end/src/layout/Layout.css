@@ -39,3 +39,7 @@ h1 {
   border-left: 4px solid #ebab3d;
   transition: all 0.25s ease-out;
 }
+
+.alert {
+  transition: all 0.25s ease-out;
+}
