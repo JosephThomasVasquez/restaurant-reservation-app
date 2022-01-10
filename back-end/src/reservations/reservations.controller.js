@@ -133,10 +133,37 @@ const hasValidTime = (req, res, next) => {
 const hasPeople = (req, res, next) => {
   const { data: { people } = {} } = req.body;
 
-  if (!people || isNaN(people) || people <= 0) {
+  if (!people) {
     return next({
       status: 400,
       message: `Must have at least 1 people.`,
+    });
+  }
+
+  res.locals.people = people;
+
+  next();
+};
+
+const hasMinPeople = (req, res, next) => {
+  let people = res.locals.people;
+
+  if (!people >= 1) {
+    return next({
+      status: 400,
+      message: `Must have 1 or more people.`,
+    });
+  }
+  next();
+};
+
+const peopleIsValid = (req, res, next) => {
+  let isValid = res.locals.people;
+
+  if (typeof isValid !== "number") {
+    return next({
+      status: 400,
+      message: `The property people must be a number.`,
     });
   }
   next();
@@ -187,6 +214,8 @@ module.exports = {
     asyncErrorBoundary(hasTime),
     asyncErrorBoundary(hasValidTime),
     asyncErrorBoundary(hasPeople),
+    asyncErrorBoundary(hasMinPeople),
+    asyncErrorBoundary(peopleIsValid),
     asyncErrorBoundary(create),
   ],
 };
