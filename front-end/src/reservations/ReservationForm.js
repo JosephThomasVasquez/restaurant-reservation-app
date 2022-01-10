@@ -43,6 +43,7 @@ const ReservationForm = ({ errorHandler }) => {
         console.log("reservation:", reservation);
         history.push(`/dashboard?=${reservation.reservation_date}`);
       } catch (error) {
+        console.log(error);
         error && errorHandler(error);
         // console.log("error:", error);
       }
@@ -165,10 +166,13 @@ const ReservationForm = ({ errorHandler }) => {
 
         <div className="row my-2">
           <div className="col-1">
-            <button className="btn btn-primary form-control">Submit</button>
+            <button type="submit" className="btn btn-primary form-control">
+              Submit
+            </button>
           </div>
           <div className="col-1">
             <button
+              type="button"
               className="btn btn-danger form-control"
               onClick={() => handleCancel()}
             >
