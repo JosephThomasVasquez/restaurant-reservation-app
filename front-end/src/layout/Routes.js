@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import useQuery from "../utils/useQuery";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
@@ -14,6 +14,14 @@ import ReservationForm from "../reservations/ReservationForm";
  * @returns {JSX.Element}
  */
 function Routes({ errorHandler }) {
+  const [date, setDate] = useState(today());
+
+  const query = useQuery().get("date");
+
+  useEffect(() => {
+    query && setDate((currentDate) => query);
+  }, [query]);
+
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -23,7 +31,7 @@ function Routes({ errorHandler }) {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={today()} />
+        <Dashboard date={date} />
       </Route>
       <Route path="/reservations/new">
         <ReservationForm errorHandler={errorHandler} />

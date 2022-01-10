@@ -12,19 +12,24 @@ import "./Layout.css";
  *
  * @returns {JSX.Element}
  */
+
 function Layout() {
   const [errors, setErrors] = useState(null);
 
+  // Error handler for displaying errors from the API
   const errorHandler = (foundErrors) => {
+    console.log("found Errors:", foundErrors);
     if (foundErrors) {
       setErrors(foundErrors);
+    } else {
+      setErrors(null);
     }
   };
 
   return (
     <div className="container-fluid">
       <div className="row h-100">
-        <div className="col-md-2 side-bar">
+        <div className="col-md-2 side-bar shadow-lg">
           <Menu />
         </div>
         <div className="col">

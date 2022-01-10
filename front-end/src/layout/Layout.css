@@ -1,4 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Quicksand:wght@300;400;700&display=swap");
+
+body {
+  font-family: "Oxygen", sans-serif;
+}
+
+h1 {
+  font-weight: 700;
+}
+
 .side-bar {
-  background-color: #393a44;
+  background-color: #e04000;
   min-width: 200px;
+  height: 100vh;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.nav-link,
+.btn {
+  transition: all 0.25s ease-out;
+}
+
+.nav-link:hover {
+  color: #ebab3d !important;
+}
+
+.slide-out {
+  border-left: 4px solid #e04000;
+  transition: all 0.25s ease-out;
+}
+
+.slide-out:hover {
+  margin-top: 2px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border-left: 4px solid #ebab3d;
+  transition: all 0.25s ease-out;
+}
+
+.alert {
+  transition: all 0.25s ease-out;
 }
