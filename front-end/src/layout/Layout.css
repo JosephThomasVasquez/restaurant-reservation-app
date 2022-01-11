@@ -8,6 +8,12 @@ h1 {
   font-weight: 700;
 }
 
+/* NAV ----------------------------------------------------------------------------------------------------------- */
+
+.brand {
+  color: #ffd92f;
+}
+
 .side-bar {
   background: rgb(37, 26, 22);
   background: linear-gradient(0deg, rgb(12, 10, 9) 0%, rgb(43, 15, 6) 100%);
@@ -29,25 +35,36 @@ h1 {
 }
 
 .slide-out {
-  border-left: 4px solid rgb(43, 15, 6);
+  border-left: 5px solid rgb(43, 15, 6);
   border-top: 1px solid rgb(43, 15, 6);
   border-bottom: 1px solid rgb(43, 15, 6);
+  border-radius: 5px;
   transition: all 0.25s ease-out;
 }
 
 .slide-out:hover {
+  position: relative;
+  transform: translate(-5px);
+  background-color: rgb(78, 28, 11);
   box-shadow: -10px 0 25px rgba(224, 34, 0, 1);
-  border-radius: 5px 0 0 5px;
-  border-left: 4px solid rgba(224, 34, 0, 1);
+  border-radius: 5px;
+  border-left: 5px solid rgba(224, 34, 0, 1);
   border-top: 1px solid rgba(224, 34, 0, 1);
   border-bottom: 1px solid rgba(224, 34, 0, 1);
   transition: all 0.25s ease-out;
 }
 
-.alert {
-  transition: all 0.25s ease-out;
-}
-
 .active {
   color: rgb(255, 166, 83) !important;
+  background-color: rgb(78, 28, 11);
+  background: linear-gradient(0deg, rgb(26, 9, 3) 0%, rgb(78, 28, 11) 100%);
+  border-radius: 5px;
+  border-left: 5px solid rgba(224, 34, 0, 1);
+  box-shadow: 0 5px 10px rgb(0, 0, 0, 1);
+}
+
+/* ERROR HANDLER -------------------------------------------------------------------------------------------------- */
+
+.alert {
+  transition: all 0.25s ease-out;
 }

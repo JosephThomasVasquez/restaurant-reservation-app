@@ -10,8 +10,13 @@ import { Link } from "react-router-dom";
 function Menu() {
   const [activeLink, setActiveLink] = useState("dashboard");
 
-  // Set state for active link for the route the user is currently one
+  // Set state for active link for the route theuser is currently one
   const handleActiveLink = ({ target }) => {
+    if (!target.id && target.innerText === "Periodic Tables") {
+      console.log(target.innerText);
+      // console.log(target.id);
+      return setActiveLink("dashboard");
+    }
     setActiveLink(target.id);
   };
 
@@ -22,63 +27,71 @@ function Menu() {
           className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
           to="/"
         >
-          <div className="sidebar-brand-text mx-3">
-            <span>Periodic Tables</span>
+          <div className="sidebar-brand-text mx-3" onClick={handleActiveLink}>
+            <span className="brand" name="dashboard">
+              Periodic Tables
+            </span>
           </div>
         </Link>
         <hr className="sidebar-divider my-0" />
         <ul className="nav navbar-nav text-light" id="accordionSidebar">
-          <li className="nav-item col-12 slide-out">
+          <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "dashboard" ? "nav-link active" : "nav-link"
+                activeLink === "dashboard"
+                  ? "nav-link slide-out active"
+                  : "nav-link slide-out"
               }
               to="/dashboard"
               onClick={handleActiveLink}
               id="dashboard"
             >
-              <span className="oi oi-dashboard" />
+              <span className="oi oi-dashboard ml-2" />
               &nbsp;Dashboard
             </Link>
           </li>
-          <li className="nav-item col-12 slide-out">
+          <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "search" ? "nav-link active" : "nav-link"
+                activeLink === "search"
+                  ? "nav-link slide-out active"
+                  : "nav-link slide-out"
               }
               to="/search"
               onClick={handleActiveLink}
               id="search"
             >
-              <span className="oi oi-magnifying-glass" />
+              <span className="oi oi-magnifying-glass ml-2" />
               &nbsp;Search
             </Link>
           </li>
-          <li className="nav-item col-12 slide-out">
+          <li className="nav-item col-12">
             <Link
               className={
                 activeLink === "reservations/new"
-                  ? "nav-link active"
-                  : "nav-link"
+                  ? "nav-link slide-out active"
+                  : "nav-link slide-out"
               }
               to="/reservations/new"
               onClick={handleActiveLink}
               id="reservations/new"
             >
-              <span className="oi oi-plus" />
+              <span className="oi oi-plus ml-2" />
               &nbsp;New Reservation
             </Link>
           </li>
-          <li className="nav-item col-12 slide-out">
+          <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "tables/new" ? "nav-link active" : "nav-link"
+                activeLink === "tables/new"
+                  ? "nav-link slide-out active"
+                  : "nav-link slide-out"
               }
               to="/tables/new"
               onClick={handleActiveLink}
               id="tables/new"
             >
-              <span className="oi oi-layers" />
+              <span className="oi oi-layers ml-2" />
               &nbsp;New Table
             </Link>
           </li>
