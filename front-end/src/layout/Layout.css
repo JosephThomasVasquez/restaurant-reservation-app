@@ -9,7 +9,8 @@ h1 {
 }
 
 .side-bar {
-  background-color: #e04000;
+  background: rgb(37, 26, 22);
+  background: linear-gradient(0deg, rgb(12, 10, 9) 0%, rgb(43, 15, 6) 100%);
   min-width: 200px;
   height: 100vh;
 }
@@ -24,22 +25,29 @@ h1 {
 }
 
 .nav-link:hover {
-  color: #ebab3d !important;
+  color: #ffd92f !important;
 }
 
 .slide-out {
-  border-left: 4px solid #e04000;
+  border-left: 4px solid rgb(43, 15, 6);
+  border-top: 1px solid rgb(43, 15, 6);
+  border-bottom: 1px solid rgb(43, 15, 6);
   transition: all 0.25s ease-out;
 }
 
 .slide-out:hover {
-  margin-top: 2px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  border-left: 4px solid #ebab3d;
+  box-shadow: -10px 0 25px rgba(224, 34, 0, 1);
+  border-radius: 5px 0 0 5px;
+  border-left: 4px solid rgba(224, 34, 0, 1);
+  border-top: 1px solid rgba(224, 34, 0, 1);
+  border-bottom: 1px solid rgba(224, 34, 0, 1);
   transition: all 0.25s ease-out;
 }
 
 .alert {
   transition: all 0.25s ease-out;
+}
+
+.active {
+  color: rgb(255, 166, 83) !important;
 }
