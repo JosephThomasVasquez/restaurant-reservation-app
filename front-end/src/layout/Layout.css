@@ -60,7 +60,7 @@ h1 {
   background: linear-gradient(0deg, rgb(26, 9, 3) 0%, rgb(78, 28, 11) 100%);
   border-radius: 5px;
   border-left: 5px solid rgba(224, 34, 0, 1);
-  box-shadow: 0 5px 10px rgb(0, 0, 0, 1);
+  box-shadow: 0 10px 20px rgb(0, 0, 0, 0.5);
 }
 
 /* ERROR HANDLER -------------------------------------------------------------------------------------------------- */
