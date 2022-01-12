@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
+import BusinessHoursInfo from "../layout/businessHours/BusinessHoursInfo";
 
 const ReservationForm = ({ errorHandler }) => {
   const history = useHistory();
@@ -67,6 +68,8 @@ const ReservationForm = ({ errorHandler }) => {
           <h1>Create Reservation</h1>
         </div>
       </div>
+
+      <BusinessHoursInfo />
 
       <form onSubmit={handleSubmit}>
         <div className="row">

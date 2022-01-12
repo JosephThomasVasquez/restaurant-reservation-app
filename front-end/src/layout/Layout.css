@@ -68,3 +68,30 @@ h1 {
 .alert {
   transition: all 0.25s ease-out;
 }
+
+/* Business Hours */
+
+.business-hours-container {
+  color: white;
+  background: rgb(37, 26, 22);
+  background: linear-gradient(0deg, rgb(12, 10, 9) 0%, rgb(43, 15, 6) 100%);
+  border-radius: 10px;
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.25);
+}
+
+.text-thin {
+  font-weight: 200;
+}
+
+.list-day {
+  font-weight: 400;
+}
+
+.list-time {
+  font-weight: 400;
+}
+
+.list-day-closed {
+  font-weight: 700;
+  color: rgb(255, 166, 83);
+}
