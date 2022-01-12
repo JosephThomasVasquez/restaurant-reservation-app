@@ -82,6 +82,33 @@ const hasValidDate = (req, res, next) => {
   next();
 };
 
+// User Story 02
+const dateNotAvailable = (req, res, next) => {
+  let getDate = new Date(res.locals.reservation_date).getDay();
+  let closedDay = 1;
+
+  if (getDate === closedDay) {
+    return next({
+      status: 400,
+      message: `Sorry, we are closed on that day.`,
+    });
+  }
+  next();
+};
+
+const dateInFuture = (req, res, next) => {
+  const today = Date.now();
+  const validDate = new Date(res.locals.reservation_date).getTime();
+
+  if (today > validDate) {
+    return next({
+      status: 400,
+      message: `Must select a date in the future.`,
+    });
+  }
+  next();
+};
+
 const hasTime = (req, res, next) => {
   const { data: { reservation_time } = {} } = req.body;
 
@@ -167,6 +194,8 @@ const list = async (req, res) => {
 
   const data = await reservationsService.list(date);
 
+  console.log(data);
+
   res.json({ data });
 };
 
@@ -194,6 +223,8 @@ module.exports = {
     asyncErrorBoundary(hasMobileNumber),
     asyncErrorBoundary(hasDate),
     asyncErrorBoundary(hasValidDate),
+    asyncErrorBoundary(dateInFuture),
+    asyncErrorBoundary(dateNotAvailable),
     asyncErrorBoundary(hasTime),
     asyncErrorBoundary(hasValidTime),
     asyncErrorBoundary(hasPeople),
