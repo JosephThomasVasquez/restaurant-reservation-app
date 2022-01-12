@@ -54,6 +54,8 @@ const hasMobileNumber = (req, res, next) => {
   next();
 };
 
+// DATE VALIDATORS --------------------------------------------------------------------
+
 const hasDate = (req, res, next) => {
   const { data: { reservation_date } = {} } = req.body;
 
@@ -71,7 +73,7 @@ const hasDate = (req, res, next) => {
 
 const hasValidDate = (req, res, next) => {
   let isValid = new Date(res.locals.reservation_date).toString();
-  console.log("isValid:", isValid);
+  // console.log("isValid:", isValid);
 
   if (isValid === "Invalid Date") {
     return next({
@@ -82,7 +84,6 @@ const hasValidDate = (req, res, next) => {
   next();
 };
 
-// User Story 02
 const dateNotAvailable = (req, res, next) => {
   let getDate = new Date(res.locals.reservation_date).getDay();
   let closedDay = 1;
@@ -100,7 +101,7 @@ const dateInFuture = (req, res, next) => {
   const today = Date.now();
   const validDate = new Date(res.locals.reservation_date).getTime();
 
-  if (today > validDate) {
+  if (today >= validDate) {
     return next({
       status: 400,
       message: `Must select a date in the future.`,
@@ -108,6 +109,8 @@ const dateInFuture = (req, res, next) => {
   }
   next();
 };
+
+// TIME VALIDATORS --------------------------------------------------------------------
 
 const hasTime = (req, res, next) => {
   const { data: { reservation_time } = {} } = req.body;
@@ -139,6 +142,38 @@ const hasValidTime = (req, res, next) => {
   next();
 };
 
+const timeIsFuture = (req, res, next) => {
+  const reservationHours = { start: 103000, end: 213000 };
+
+  const today = new Date(Date.now());
+
+  const timeNow = [
+    today.getHours().toString(),
+    today.getMinutes().toString(),
+    today.getSeconds().toString(),
+  ].join("");
+
+  const time = res.locals.reservation_time.split(":").join("");
+  console.log("timeNow:", timeNow);
+  console.log("reservation_time:", time);
+
+  if (
+    time > reservationHours.start &&
+    time > timeNow &&
+    time < reservationHours.end
+  ) {
+    console.log("reservation_time:", time);
+    return next();
+  } else {
+    next({
+      status: 400,
+      message: `Must have a valid reservation_time.`,
+    });
+  }
+};
+
+// PEOPLE VALIDATORS --------------------------------------------------------------------
+
 const hasPeople = (req, res, next) => {
   const { data: { people } = {} } = req.body;
 
@@ -168,7 +203,6 @@ const hasMinPeople = (req, res, next) => {
 
 const peopleIsValid = (req, res, next) => {
   let isValid = res.locals.people;
-  console.log("people:", isValid, "typeof:", typeof isValid);
 
   if (typeof isValid !== "number") {
     return next({
@@ -194,7 +228,7 @@ const list = async (req, res) => {
 
   const data = await reservationsService.list(date);
 
-  console.log(data);
+  console.log("LIST: reservations data", data);
 
   res.json({ data });
 };
@@ -227,6 +261,7 @@ module.exports = {
     asyncErrorBoundary(dateNotAvailable),
     asyncErrorBoundary(hasTime),
     asyncErrorBoundary(hasValidTime),
+    asyncErrorBoundary(timeIsFuture),
     asyncErrorBoundary(hasPeople),
     asyncErrorBoundary(hasMinPeople),
     asyncErrorBoundary(peopleIsValid),
