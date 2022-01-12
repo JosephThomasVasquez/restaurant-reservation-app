@@ -7,8 +7,6 @@ import Layout from "./layout/Layout";
  * @returns {JSX.Element}
  */
 function App() {
-  console.log("frontend-commit");
-
   return (
     <Switch>
       <Route path="/">
