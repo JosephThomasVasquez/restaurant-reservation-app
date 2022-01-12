@@ -20,8 +20,12 @@ const ReservationForm = ({ errorHandler }) => {
   const [reservation, setReservation] = useState(initialFormData);
 
   const handleChange = ({ target }) => {
-    console.log("For initial commit frontend");
-    setReservation({ ...reservation, [target.name]: target.value });
+    // Make sure the people value is a number
+    if (target.name === "people") {
+      setReservation({ ...reservation, [target.name]: Number(target.value) });
+    } else {
+      setReservation({ ...reservation, [target.name]: target.value });
+    }
   };
 
   const handleSubmit = (e) => {

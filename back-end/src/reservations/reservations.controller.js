@@ -15,24 +15,6 @@ const hasValidProperties = (req, res, next) => {
       message: `Data from the request body is missing.`,
     });
 
-  // const {
-  //   first_name,
-  //   last_name,
-  //   mobile_number,
-  //   people,
-  //   reservation_date,
-  //   reservation_time,
-  // } = req.body.data;
-
-  // console.log("data:", req.body.data);
-
-  // const invalidProperties = [];
-
-  // // Check properties
-  // for (let property in req.body.data) {
-  //   !req.body.data[property] && invalidProperties.push(property);
-  // }
-
   next();
 };
 
@@ -159,6 +141,7 @@ const hasMinPeople = (req, res, next) => {
 
 const peopleIsValid = (req, res, next) => {
   let isValid = res.locals.people;
+  console.log("people:", isValid, "typeof:", typeof isValid);
 
   if (typeof isValid !== "number") {
     return next({
