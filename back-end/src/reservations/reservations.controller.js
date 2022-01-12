@@ -143,25 +143,15 @@ const hasValidTime = (req, res, next) => {
 };
 
 const timeIsFuture = (req, res, next) => {
-  const reservationHours = { start: 103000, end: 213000 };
+  const reservationHours = { start: "10:29:59", end: "21:29:59" };
+
+  const time = res.locals.reservation_time;
 
   const today = new Date(Date.now());
 
-  const timeNow = [
-    today.getHours().toString(),
-    today.getMinutes().toString(),
-    today.getSeconds().toString(),
-  ].join("");
-
-  const time = res.locals.reservation_time.split(":").join("");
-  console.log("timeNow:", timeNow);
   console.log("reservation_time:", time);
 
-  if (
-    time > reservationHours.start &&
-    time > timeNow &&
-    time < reservationHours.end
-  ) {
+  if (time > reservationHours.start && time < reservationHours.end) {
     console.log("reservation_time:", time);
     return next();
   } else {
