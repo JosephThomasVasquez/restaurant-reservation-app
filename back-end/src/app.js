@@ -19,6 +19,4 @@ app.use("/reservations", reservationsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-console.log("backend-commit");
-
 module.exports = app;
