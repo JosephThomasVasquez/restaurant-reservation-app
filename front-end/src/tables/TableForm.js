@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { createTable } from "../utils/api";
 
-const TablesForm = () => {
+const TablesForm = ({ errorHandler }) => {
   const history = useHistory();
 
   const initialFormData = {
@@ -18,7 +19,21 @@ const TablesForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const submitTable = async () => {};
+    const submitTable = async () => {
+      const abortController = new AbortController();
+
+      try {
+        //   Send a POST request of the table to the backend
+        const response = await createTable(table, abortController.abort());
+
+        setTable(response);
+        console.log("table:", table);
+        history.push("/dashboard");
+      } catch (error) {
+        console.log(error);
+        error && errorHandler(error);
+      }
+    };
 
     submitTable();
   };

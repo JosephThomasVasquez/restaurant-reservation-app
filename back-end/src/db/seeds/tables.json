@@ -1,0 +1,42 @@
+[
+  {
+    "table_name": "Bar #1",
+    "capacity": 1
+  },
+  {
+    "table_name": "Bar #2",
+    "capacity": 1
+  },
+  {
+    "table_name": "#1",
+    "capacity": 6
+  },
+  {
+    "table_name": "#2",
+    "capacity": 6
+  },
+  {
+    "table_name": "#3",
+    "capacity": 6
+  },
+  {
+    "table_name": "#4",
+    "capacity": 6
+  },
+  {
+    "table_name": "Booth #1",
+    "capacity": 8
+  },
+  {
+    "table_name": "Booth #2",
+    "capacity": 8
+  },
+  {
+    "table_name": "Booth #3",
+    "capacity": 8
+  },
+  {
+    "table_name": "Booth #4",
+    "capacity": 12
+  }
+]
