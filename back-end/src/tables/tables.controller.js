@@ -67,7 +67,6 @@ const hasMinCapacity = (req, res, next) => {
 };
 
 const capacityIsNaN = (req, res, next) => {
-  console.log("capacity?", typeof res.locals.capacity);
   if (typeof res.locals.capacity !== "number") {
     return next({
       status: 400,
@@ -87,19 +86,18 @@ Resource Handlers
       /GET
  */
 const list = async (req, res) => {
-  // get reservations by date query
-  // const date = req.query.date;
-
   const data = await tablesService.list();
-  console.log(data);
 
   res.json({ data });
 };
 
+/* Create table handler
+      /POST
+*/
+
 const create = async (req, res, next) => {
   try {
     const data = await tablesService.create(req.body.data);
-    console.log("created table:", data);
 
     res.status(201).json({ data });
   } catch (error) {

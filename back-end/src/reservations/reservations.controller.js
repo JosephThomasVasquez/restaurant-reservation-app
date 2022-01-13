@@ -73,7 +73,6 @@ const hasDate = (req, res, next) => {
 
 const hasValidDate = (req, res, next) => {
   let isValid = new Date(res.locals.reservation_date).toString();
-  // console.log("isValid:", isValid);
 
   if (isValid === "Invalid Date") {
     return next({
@@ -147,12 +146,7 @@ const timeIsFuture = (req, res, next) => {
 
   const time = res.locals.reservation_time;
 
-  const today = new Date(Date.now());
-
-  console.log("reservation_time:", time);
-
   if (time > reservationHours.start && time < reservationHours.end) {
-    console.log("reservation_time:", time);
     return next();
   } else {
     next({
@@ -213,12 +207,9 @@ Resource Handlers
       /GET
  */
 const list = async (req, res) => {
-  // get reservations by date query
   const date = req.query.date;
 
   const data = await reservationsService.list(date);
-
-  console.log("LIST: reservations data", data);
 
   res.json({ data });
 };
@@ -230,7 +221,6 @@ const list = async (req, res) => {
 const create = async (req, res, next) => {
   try {
     const data = await reservationsService.create(req.body.data);
-    console.log("created reservation::", data);
 
     res.status(201).json({ data });
   } catch (error) {
