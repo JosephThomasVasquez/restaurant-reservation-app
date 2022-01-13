@@ -180,7 +180,7 @@ const ReservationForm = ({ errorHandler }) => {
           <div className="col-1">
             <button
               type="button"
-              className="btn btn-danger form-control"
+              className="btn btn-secondary form-control"
               onClick={() => handleCancel()}
             >
               Cancel
