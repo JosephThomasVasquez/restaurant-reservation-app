@@ -101,7 +101,7 @@ const dateInFuture = (req, res, next) => {
   const today = Date.now();
   const validDate = new Date(res.locals.reservation_date).getTime();
 
-  if (today >= validDate) {
+  if (today > validDate) {
     return next({
       status: 400,
       message: `Must select a date in the future.`,
