@@ -13,7 +13,11 @@ const TablesForm = ({ errorHandler }) => {
   const [table, setTable] = useState(initialFormData);
 
   const handleChange = ({ target }) => {
-    setTable({ ...table, [target.name]: target.value });
+    if (target.name === "capacity") {
+      setTable({ ...table, [target.name]: Number(target.value) });
+    } else {
+      setTable({ ...table, [target.name]: target.value });
+    }
   };
 
   const handleSubmit = (e) => {

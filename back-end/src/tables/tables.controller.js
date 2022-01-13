@@ -7,6 +7,76 @@ Validation handlers
 --------------------------------------------------------------------------------
 */
 
+// Checks if request body values are valid
+const hasValidProperties = (req, res, next) => {
+  if (!req.body.data)
+    return next({
+      status: 400,
+      message: `Data from the request body is missing.`,
+    });
+
+  next();
+};
+
+const hasTableName = (req, res, next) => {
+  const { data: { table_name } = {} } = req.body;
+
+  if (!table_name) {
+    return next({
+      status: 400,
+      message: `Table must have a table_name.`,
+    });
+  }
+
+  res.locals.table_name = table_name;
+  next();
+};
+
+const validTableCharacterLength = (req, res, next) => {
+  if (res.locals.table_name.length < 2) {
+    return next({
+      status: 400,
+      message: `Table must have a table_name.`,
+    });
+  }
+  next();
+};
+
+const hasCapacity = (req, res, next) => {
+  const { data: { capacity } = {} } = req.body;
+
+  if (!capacity) {
+    return next({
+      status: 400,
+      message: `Table must have a capacity.`,
+    });
+  }
+
+  res.locals.capacity = capacity;
+  next();
+};
+
+const hasMinCapacity = (req, res, next) => {
+  if (res.locals.capacity <= 0) {
+    return next({
+      status: 400,
+      message: `Table must have a table_name.`,
+    });
+  }
+  next();
+};
+
+const capacityIsNaN = (req, res, next) => {
+  console.log("capacity?", typeof res.locals.capacity);
+  if (typeof res.locals.capacity !== "number") {
+    return next({
+      status: 400,
+      message: `The property capacity must have a number.`,
+    });
+  }
+  next();
+};
+
 /*
 --------------------------------------------------------------------------------
 Resource Handlers
@@ -39,5 +109,13 @@ const create = async (req, res, next) => {
 
 module.exports = {
   list: asyncErrorBoundary(list),
-  create: asyncErrorBoundary(create),
+  create: [
+    asyncErrorBoundary(hasValidProperties),
+    asyncErrorBoundary(hasTableName),
+    asyncErrorBoundary(validTableCharacterLength),
+    asyncErrorBoundary(hasCapacity),
+    asyncErrorBoundary(hasMinCapacity),
+    asyncErrorBoundary(capacityIsNaN),
+    asyncErrorBoundary(create),
+  ],
 };
