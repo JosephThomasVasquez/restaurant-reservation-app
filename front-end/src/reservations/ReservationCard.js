@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ReservationCard = ({ reservation }) => {
   console.log(reservation);
@@ -22,6 +23,18 @@ const ReservationCard = ({ reservation }) => {
         <div className="card-title">Phone: {mobile_number}</div>
         <p className="card-text">Time: {reservation_time}</p>
         <p className="card-text">Guests: {people}</p>
+      </div>
+      <div className="row mx-1 my-3">
+        <div className="col">
+          <Link
+            className="seat-link btn btn-secondary"
+            to={`/reservations/${reservation_id}/seat`}
+            id="dashboard"
+          >
+            <i className="fas fa-chair"></i>
+            &nbsp;Seat
+          </Link>
+        </div>
       </div>
     </div>
   );

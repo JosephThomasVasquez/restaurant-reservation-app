@@ -47,6 +47,8 @@ const ReservationForm = ({ errorHandler }) => {
         setReservation(response);
         console.log("reservation:", reservation);
         history.push(`/dashboard?=${reservation.reservation_date}`);
+
+        errorHandler(null);
       } catch (error) {
         console.log(error);
         error && errorHandler(error);
@@ -188,7 +190,6 @@ const ReservationForm = ({ errorHandler }) => {
           </div>
         </div>
       </form>
-      <div>{JSON.stringify(reservation)}</div>
     </div>
   );
 };

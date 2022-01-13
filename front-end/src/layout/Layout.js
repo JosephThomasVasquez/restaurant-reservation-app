@@ -24,6 +24,7 @@ function Layout() {
     } else {
       setErrors(null);
     }
+    console.log("errors", errors);
   };
 
   return (

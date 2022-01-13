@@ -31,8 +31,9 @@ const TablesForm = ({ errorHandler }) => {
         const response = await createTable(table, abortController.abort());
 
         setTable(response);
-        console.log("table:", table);
         history.push("/dashboard");
+
+        errorHandler(null);
       } catch (error) {
         console.log(error);
         error && errorHandler(error);
@@ -107,7 +108,6 @@ const TablesForm = ({ errorHandler }) => {
           </div>
         </div>
       </form>
-      <div>{JSON.stringify(table)}</div>
     </div>
   );
 };
