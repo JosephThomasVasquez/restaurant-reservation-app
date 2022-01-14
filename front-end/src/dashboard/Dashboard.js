@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import { previous, today, next } from "../utils/date-time";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "../reservations/ReservationList";
+import TablesList from "../tables/TablesList";
 
 /**
  * Defines the dashboard page.
@@ -16,8 +17,11 @@ function Dashboard({ date }) {
 
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const [tables, setTables] = useState([]);
+  const [tablesError, setTablesError] = useState(null);
 
   useEffect(loadDashboard, [date]);
+  useEffect(loadTables, []);
 
   function loadDashboard() {
     const abortController = new AbortController();
@@ -25,6 +29,12 @@ function Dashboard({ date }) {
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    return () => abortController.abort();
+  }
+
+  function loadTables() {
+    const abortController = new AbortController();
+    listTables(abortController.signal).then(setTables).catch(setTablesError);
     return () => abortController.abort();
   }
 
@@ -47,7 +57,14 @@ function Dashboard({ date }) {
 
   return (
     <main>
-      <h1>Dashboard</h1>
+      <h1 className="d-inline-block">Dashboard</h1>
+      {reservations.length >= 1 ? (
+        <span className="mx-3">
+          <span className="reservation-count">{reservations.length}</span>
+          &nbsp;reservations
+        </span>
+      ) : null}
+
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for {date}</h4>
       </div>
@@ -82,8 +99,17 @@ function Dashboard({ date }) {
           </button>
         </div>
       </div>
+      <div className="container-fluid m-0 p-0">
+        <div className="row">
+          <div className="col-9 m-0 p-0">
+            <ReservationList reservations={reservations} />
+          </div>
+          <div className="col-3 m-0 p-0">
+            <TablesList tables={tables} />
+          </div>
+        </div>
+      </div>
       <ErrorAlert error={reservationsError} />
-      <ReservationList reservations={reservations} />
     </main>
   );
 }

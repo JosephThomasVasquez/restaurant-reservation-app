@@ -197,6 +197,13 @@ const peopleIsValid = (req, res, next) => {
   next();
 };
 
+const reservationExists = (req, res, next) => {
+  const { reservation_id } = req.params;
+  console.log("reservation ID:", reservation_id);
+
+  res.json({ reservation_id });
+};
+
 /*
 --------------------------------------------------------------------------------
 Resource Handlers
@@ -247,4 +254,5 @@ module.exports = {
     asyncErrorBoundary(peopleIsValid),
     asyncErrorBoundary(create),
   ],
+  read: asyncErrorBoundary(reservationExists),
 };

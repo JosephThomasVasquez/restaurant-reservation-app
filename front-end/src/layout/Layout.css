@@ -69,7 +69,17 @@ h1 {
   transition: all 0.25s ease-out;
 }
 
-/* Business Hours */
+/* DASHBOARD -------------------------------------------------------------------------------------------------- */
+
+.reservation-count {
+  position: relative;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(224, 34, 0, 1);
+  margin: auto;
+}
+
+/* Business Hours -------------------------------------------------------------------------------------------------- */
 
 .business-hours-container {
   color: white;
@@ -103,12 +113,15 @@ h1 {
 }
 
 .card-header {
-  background: rgba(255, 166, 83, 0.2);
-  width: 100%;
+  background-color: rgb(43, 15, 6);
+  color: white;
+  border-radius: 10px 10px 0 0;
   padding: 4px;
+  text-align: center;
 }
 
 .reservation-card {
+  min-width: 300px;
   background: rgb(37, 26, 22);
   background: linear-gradient(
     0deg,
@@ -116,7 +129,7 @@ h1 {
     rgba(43, 15, 6, 0) 100%
   );
   border-radius: 10px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.25s ease-out;
 }
 
@@ -131,6 +144,35 @@ h1 {
     rgba(43, 15, 6, 0) 90%
   );
   border-radius: 10px;
-  border: 2px solid rgba(224, 34, 0, 1);
+  border: 1px solid rgba(224, 34, 0, 1);
   transition: all 0.25s ease-out;
+}
+
+/* TABLES CARD -------------------------------------------------------------------------------------------------- */
+
+.tables-header {
+  background: rgba(255, 166, 83, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  padding: 4px;
+}
+
+.table-item {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease-out;
+}
+
+.table-item:hover {
+  position: relative;
+  transform: translate(-2px, -2px);
+  background-color: rgba(224, 34, 0, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease-out;
+}
+
+.table-status {
+  font-weight: 200;
+  font-style: italic;
+  color: red;
 }

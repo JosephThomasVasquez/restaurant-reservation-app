@@ -1,7 +1,11 @@
 const knex = require("../db/connection");
 
 const list = () => {
-  return knex("tables").select("*");
+  return knex("tables").select("*").groupBy("table_id").orderBy("table_name");
+};
+
+const listByCapacity = () => {
+  return knex("tables").select("*").groupBy("table_id").orderBy("capacity");
 };
 
 const create = (table) => {
@@ -13,5 +17,6 @@ const create = (table) => {
 
 module.exports = {
   list,
+  listByCapacity,
   create,
 };
