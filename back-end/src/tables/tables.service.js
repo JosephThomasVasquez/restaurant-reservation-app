@@ -15,8 +15,29 @@ const create = (table) => {
     .then((createdRecords) => createdRecords[0]);
 };
 
+const read = (tableId) => {
+  return knex("tables").select("*").where({ table_id: tableId }).first();
+};
+
+const update = (tableId, reservationId) => {
+  return knex.transaction(async (trx) => {
+    await knex("reservations")
+      .where({ reservation_id: reservationId })
+      .update({ status: "seated" })
+      .transacting(trx);
+
+    await knex("tables")
+      .where({ table_id: tableId })
+      .update({ reservation_id: reservationId })
+      .returning("*")
+      .transacting(trx);
+  });
+};
+
 module.exports = {
   list,
   listByCapacity,
   create,
+  read,
+  update,
 };

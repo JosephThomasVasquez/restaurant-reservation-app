@@ -76,6 +76,23 @@ const capacityIsNaN = (req, res, next) => {
   next();
 };
 
+const tableExists = async (req, res, next) => {
+  const { table_id } = req.params;
+
+  const table = await tablesService.read(table_id);
+
+  if (table) {
+    console.log("found table", table);
+    res.locals.table = table;
+    return next();
+  }
+
+  next({
+    status: 400,
+    message: `No table found with ID ${table_id}.`,
+  });
+};
+
 /*
 --------------------------------------------------------------------------------
 Resource Handlers
@@ -105,6 +122,19 @@ const create = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  console.log("found table", res.locals.table.table_id);
+
+  const { table_id } = res.locals.table;
+
+  //   const table_id = req.params.table_id;
+  const { reservation_id } = req.body.data;
+
+  const data = tablesService.update(table_id, reservation_id);
+
+  res.json({ data });
+};
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
@@ -116,4 +146,5 @@ module.exports = {
     asyncErrorBoundary(capacityIsNaN),
     asyncErrorBoundary(create),
   ],
+  update: [asyncErrorBoundary(tableExists), asyncErrorBoundary(update)],
 };

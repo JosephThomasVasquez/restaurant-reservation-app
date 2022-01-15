@@ -1,9 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter, useLocation } from "react-router-dom";
 
 const ReservationCard = ({ reservation }) => {
-  console.log(reservation);
-
   const {
     reservation_id,
     first_name,
@@ -15,7 +13,7 @@ const ReservationCard = ({ reservation }) => {
   } = reservation;
 
   return (
-    <div className="card col-3 shadow-lg m-3 p-0 reservation-card">
+    <div className="card col-3 shadow m-3 p-0 reservation-card">
       <h5 className="card-header font-weight-bold">
         {first_name} {last_name}
       </h5>
@@ -28,8 +26,10 @@ const ReservationCard = ({ reservation }) => {
         <div className="col">
           <Link
             className="seat-link btn btn-secondary"
-            to={`/reservations/${reservation_id}/seat`}
-            state={{ reservation }}
+            to={{
+              pathname: `/reservations/${reservation_id}/seat`,
+              state: { reservation },
+            }}
             id="reservation-id"
           >
             <i className="fas fa-chair"></i>
@@ -41,4 +41,4 @@ const ReservationCard = ({ reservation }) => {
   );
 };
 
-export default ReservationCard;
+export default withRouter(ReservationCard);
