@@ -22,14 +22,14 @@ const TablesList = ({ tables }) => {
     </div>
   ));
   return (
-    <div className="container mt-3 shadow">
+    <div className="container mt-3 shadow table-list-bg">
       <div className="row">
-        <div className="mr-3 tables-header">
+        <div className="tables-header">
           <div className="text-center font-weight-bold">Tables</div>
         </div>
       </div>
       <div className="row">
-        <div className="mr-3 w-100">{mapTables}</div>
+        <div className=" w-100">{mapTables}</div>
       </div>
     </div>
   );

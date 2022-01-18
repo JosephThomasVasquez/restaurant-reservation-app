@@ -104,7 +104,7 @@ function Dashboard({ date }) {
           <div className="col-9 m-0 p-0">
             <ReservationList reservations={reservations} />
           </div>
-          <div className="col-3 m-0 p-0">
+          <div className="col-3 m-0 p-0 pr-3">
             <TablesList tables={tables} />
           </div>
         </div>
