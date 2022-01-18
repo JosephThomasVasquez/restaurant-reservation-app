@@ -1,4 +1,5 @@
 const tablesService = require("./tables.service");
+const reservationsService = require("../reservations/reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 /*
@@ -12,7 +13,7 @@ const hasValidProperties = (req, res, next) => {
   if (!req.body.data)
     return next({
       status: 400,
-      message: `Data from the request body is missing.`,
+      message: `Missing data from the request body.`,
     });
 
   next();
@@ -74,6 +75,63 @@ const capacityIsNaN = (req, res, next) => {
     });
   }
   next();
+};
+
+// ---------------------------------------------------------------------------------------------------------------
+
+// Seat reservation - Table validation
+
+const tableIsFree = (req, res, next) => {
+  const { table_id, reservation_id } = res.locals.table;
+
+  if (reservation_id) {
+    return next({
+      status: 400,
+      message: `The table with ID ${table_id} is occupied by reservation ID ${reservation_id}. Please select another table.`,
+    });
+  }
+
+  next();
+};
+
+const tableHasCapacity = (req, res, next) => {
+  const { people } = res.locals.reservation;
+  const { capacity } = res.locals.table;
+
+  if (people > capacity) {
+    return next({
+      status: 400,
+      message: `This table does not have the capacity for ${people} people. Please select a table that has equal or more capcity.`,
+    });
+  }
+
+  next();
+};
+
+// ---------------------------------------------------------------------------------------------------------------
+
+//  reservation_id validation
+const reservationExists = async (req, res, next) => {
+  const { reservation_id } = req.body.data;
+
+  if (!reservation_id) {
+    return next({
+      status: 400,
+      message: `Property reservation_id is missing from request body.`,
+    });
+  }
+
+  const reservation = await reservationsService.read(reservation_id);
+
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  } else {
+    next({
+      status: 404,
+      message: `Reservation with ID ${reservation_id} not found.`,
+    });
+  }
 };
 
 const tableExists = async (req, res, next) => {
@@ -146,5 +204,12 @@ module.exports = {
     asyncErrorBoundary(capacityIsNaN),
     asyncErrorBoundary(create),
   ],
-  update: [asyncErrorBoundary(tableExists), asyncErrorBoundary(update)],
+  update: [
+    asyncErrorBoundary(hasValidProperties),
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(tableExists),
+    asyncErrorBoundary(tableIsFree),
+    asyncErrorBoundary(tableHasCapacity),
+    asyncErrorBoundary(update),
+  ],
 };

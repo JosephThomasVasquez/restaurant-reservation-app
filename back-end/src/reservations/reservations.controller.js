@@ -197,11 +197,24 @@ const peopleIsValid = (req, res, next) => {
   next();
 };
 
-const reservationExists = (req, res, next) => {
-  const { reservation_id } = req.params;
-  console.log("reservation ID:", reservation_id);
+const reservationExists = async (req, res, next) => {
+  const { reservationId } = req.params;
+  console.log("params", req.params);
+  console.log("reservation ID:", reservationId);
 
-  res.json({ reservation_id });
+  const reservation = await reservationsService.read(reservationId);
+
+  console.log(reservation);
+
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  }
+
+  next({
+    status: 404,
+    message: `Reservation with ID ${reservationId} not found.`,
+  });
 };
 
 /*
@@ -235,6 +248,13 @@ const create = async (req, res, next) => {
   }
 };
 
+const read = (req, res, next) => {
+  const data = res.locals.reservation;
+  console.log("data", data);
+
+  res.json({ data });
+};
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
@@ -254,5 +274,5 @@ module.exports = {
     asyncErrorBoundary(peopleIsValid),
     asyncErrorBoundary(create),
   ],
-  read: asyncErrorBoundary(reservationExists),
+  read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
 };

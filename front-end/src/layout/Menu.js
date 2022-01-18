@@ -13,7 +13,6 @@ function Menu() {
   // Set state for active link for the route theuser is currently one
   const handleActiveLink = ({ target }) => {
     if (!target.id && target.innerText === "Periodic Tables") {
-      console.log(target.innerText);
       // console.log(target.id);
       return setActiveLink("dashboard");
     }
