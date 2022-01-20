@@ -189,6 +189,7 @@ const update = async (req, res, next) => {
   const { reservation_id } = req.body.data;
 
   const data = tablesService.update(table_id, reservation_id);
+  console.log("data:", data);
 
   res.json({ data });
 };

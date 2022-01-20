@@ -19,19 +19,16 @@ const read = (tableId) => {
   return knex("tables").select("*").where({ table_id: tableId }).first();
 };
 
-const update = (tableId, reservationId) => {
-  return knex.transaction(async (trx) => {
-    await knex("reservations")
-      .where({ reservation_id: reservationId })
-      .update({ status: "seated" })
-      .transacting(trx);
-
-    await knex("tables")
-      .where({ table_id: tableId })
-      .update({ reservation_id: reservationId })
-      .returning("*")
-      .transacting(trx);
-  });
+const update = (table_id, reservation_id) => {
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "seated" })
+    .then(() => {
+      return knex("tables")
+        .where({ table_id })
+        .update({ reservation_id })
+        .returning("*");
+    });
 };
 
 module.exports = {
