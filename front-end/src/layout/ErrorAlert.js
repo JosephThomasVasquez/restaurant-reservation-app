@@ -11,7 +11,20 @@ import React from "react";
 function ErrorAlert({ error }) {
   return (
     error && (
-      <div className="alert alert-danger mt-3">Error: {error.message}</div>
+      <div
+        className="alert alert-danger mt-3 alert-dismissible fade show"
+        role="alert"
+      >
+        Error: {error.message}
+        <button
+          type="button"
+          className="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     )
   );
 }

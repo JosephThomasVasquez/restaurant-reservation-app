@@ -33,7 +33,7 @@ function Routes({ errorHandler }) {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={date} />
+        <Dashboard date={date} errorHandler={errorHandler} />
       </Route>
       <Route path="/reservations/new">
         <ReservationForm errorHandler={errorHandler} />

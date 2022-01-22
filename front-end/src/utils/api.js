@@ -82,6 +82,8 @@ export async function createReservation(reservation, signal) {
   await fetchJson(url, options, {});
 }
 
+// -------TABLES-----------------------------------------------------------------------------------------------------------
+
 /**
  * Retrieves all tables.
  * @returns {Promise<[table]>}
@@ -110,14 +112,25 @@ export async function createTable(table, signal) {
 }
 
 export async function updateTable(table_id, reservation_id, signal) {
-  console.log("infos:", table_id, reservation_id);
-
   const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
 
   const options = {
     method: "PUT",
     headers,
     body: JSON.stringify({ data: { reservation_id } }),
+    signal,
+  };
+
+  await fetchJson(url, options, {});
+}
+
+export async function deleteTable(table_id, reservation_id, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
+
+  const options = {
+    method: "DELETE",
+    headers,
+    body: JSON.stringify({ data: table_id }),
     signal,
   };
 

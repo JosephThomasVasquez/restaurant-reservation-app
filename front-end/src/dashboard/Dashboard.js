@@ -12,7 +12,7 @@ import TablesList from "../tables/TablesList";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+function Dashboard({ date, errorHandler }) {
   const history = useHistory();
 
   const [reservations, setReservations] = useState([]);
@@ -105,11 +105,11 @@ function Dashboard({ date }) {
             <ReservationList reservations={reservations} />
           </div>
           <div className="col-3 m-0 p-0 pr-3">
-            <TablesList tables={tables} />
+            <TablesList tables={tables} errorHandler={errorHandler} />
           </div>
         </div>
       </div>
-      <ErrorAlert error={reservationsError} />
+      <ErrorAlert error={(reservationsError, tablesError)} />
     </main>
   );
 }

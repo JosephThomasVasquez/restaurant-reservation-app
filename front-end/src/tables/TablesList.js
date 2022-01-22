@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { deleteTable } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
-const TablesList = ({ tables }) => {
+const TablesList = ({ tables, errorHandler }) => {
+  const [finishTable, setFinishTable] = useState(null);
+
+  const handleFinishTable = async (table_id) => {
+    console.log("table_id", table_id);
+
+    if (
+      window.confirm(
+        "Is this table ready to seat new guests? This cannot be undone."
+      )
+    ) {
+      try {
+        const abortController = new AbortController();
+
+        await deleteTable(table_id, abortController.abort());
+
+        errorHandler(null);
+      } catch (error) {
+        console.log(error);
+        // setTableError(error);
+        error && errorHandler(error);
+      }
+    }
+  };
+
   const mapTables = tables.map((table) => (
     <div
       className={
@@ -24,6 +50,7 @@ const TablesList = ({ tables }) => {
           <button
             className="btn btn-outline-danger btn-sm"
             data-table-id-finish={table.table_id}
+            onClick={() => handleFinishTable(table.table_id)}
           >
             Finish
           </button>
@@ -31,6 +58,7 @@ const TablesList = ({ tables }) => {
       )}
     </div>
   ));
+
   return (
     <div className="container mt-3 shadow table-list-bg">
       <div className="row">
