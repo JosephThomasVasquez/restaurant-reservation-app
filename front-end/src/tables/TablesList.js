@@ -5,20 +5,30 @@ const TablesList = ({ tables }) => {
     <div
       className={
         table.reservation_id
-          ? "row p-0 m-0 py-3 table-item-occupied"
+          ? "row p-0 m-0 py-3 table-item-occupied d-flex align-items-center"
           : "row p-0 m-0 py-3 table-item"
       }
       key={table.table_id}
     >
-      <div className="col-5">{table.table_name}:</div>
-      <div className="col-2">{table.capacity}</div>
-      <div className="col-5" data-table-id-status={`${table.table_id}`}>
+      <div className="col-4">{table.table_name}:</div>
+      <div className="col-1">{table.capacity}</div>
+      <div className="col-3 " data-table-id-status={`${table.table_id}`}>
         {table.reservation_id ? (
           <span className="table-occupied">Occupied</span>
         ) : (
-          <span className="table-free">Free</span>
+          <span className="table-free my-5">Free</span>
         )}
       </div>
+      {table.reservation_id && (
+        <div className="col-3">
+          <button
+            className="btn btn-outline-danger btn-sm"
+            data-table-id-finish={table.table_id}
+          >
+            Finish
+          </button>
+        </div>
+      )}
     </div>
   ));
   return (

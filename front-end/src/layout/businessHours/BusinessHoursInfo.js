@@ -14,7 +14,7 @@ const BusinessHoursInfo = () => {
       "Sunday",
     ],
   };
-  console.log(businessHours);
+  // console.log(businessHours);
 
   return (
     <div className="business-hours-container col-6 p-2 mb-5">
