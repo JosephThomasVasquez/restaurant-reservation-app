@@ -36,9 +36,6 @@ const SeatReservation = ({ errorHandler }) => {
   ));
 
   const handleSubmit = (e) => {
-    console.log("tables", tables);
-    console.log("seat", seat);
-    console.log("location", location);
     e.preventDefault();
 
     const submitSeatReservation = async () => {

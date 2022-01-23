@@ -1,6 +1,13 @@
 const knex = require("../db/connection");
 
-const list = (date) => {
+const list = () => {
+  return knex("reservations")
+    .select("*")
+    .groupBy("reservation_id")
+    .orderBy("reservation_time");
+};
+
+const listByDate = (date) => {
   return knex("reservations")
     .select("*")
     .where({ reservation_date: date })
@@ -21,6 +28,7 @@ const read = (reservation_id) => {
 
 module.exports = {
   list,
+  listByDate,
   create,
   read,
 };

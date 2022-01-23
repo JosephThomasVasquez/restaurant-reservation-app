@@ -31,10 +31,24 @@ const update = (table_id, reservation_id) => {
     });
 };
 
+const resetTable = (table_id, reservation_id) => {
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "finished" })
+    .returning("*")
+    .then(() => {
+      return knex("tables")
+        .where({ table_id })
+        .update({ reservation_id: null })
+        .returning("*");
+    });
+};
+
 module.exports = {
   list,
   listByCapacity,
   create,
   read,
   update,
+  resetTable,
 };

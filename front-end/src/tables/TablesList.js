@@ -1,12 +1,30 @@
-import React, { useState } from "react";
-import { deleteTable } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
+import React, { useState, useEffect } from "react";
+import { listReservations, resetTable } from "../utils/api";
+import { useHistory } from "react-router-dom";
 
 const TablesList = ({ tables, errorHandler }) => {
-  const [finishTable, setFinishTable] = useState(null);
+  const history = useHistory();
 
-  const handleFinishTable = async (table_id) => {
-    console.log("table_id", table_id);
+  const [finishTable, setFinishTable] = useState(null);
+  const [reservations, setReservations] = useState([]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    listReservations(abortController.signal)
+      .then(setReservations)
+      .catch((error) => {
+        errorHandler(error);
+      });
+    return () => abortController.abort();
+  }, []);
+
+  const handleFinishTable = async (table) => {
+    console.log("table_id", table);
+
+    const matchReservation = reservations.find(
+      (reservation) => reservation.reservation_id === table.reservation_id
+    );
 
     if (
       window.confirm(
@@ -16,9 +34,14 @@ const TablesList = ({ tables, errorHandler }) => {
       try {
         const abortController = new AbortController();
 
-        await deleteTable(table_id, abortController.abort());
+        await resetTable(
+          table.table_id,
+          matchReservation.reservation_id,
+          abortController.abort()
+        );
 
         errorHandler(null);
+        history.go();
       } catch (error) {
         console.log(error);
         // setTableError(error);
@@ -50,7 +73,7 @@ const TablesList = ({ tables, errorHandler }) => {
           <button
             className="btn btn-outline-danger btn-sm"
             data-table-id-finish={table.table_id}
-            onClick={() => handleFinishTable(table.table_id)}
+            onClick={() => handleFinishTable(table)}
           >
             Finish
           </button>

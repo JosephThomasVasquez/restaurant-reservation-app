@@ -1,6 +1,7 @@
 const tablesService = require("./tables.service");
 const reservationsService = require("../reservations/reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+const { table } = require("../db/connection");
 
 /*
 --------------------------------------------------------------------------------
@@ -108,6 +109,19 @@ const tableHasCapacity = (req, res, next) => {
   next();
 };
 
+const tableIsOccupied = (req, res, next) => {
+  const { table_id, reservation_id } = res.locals.table;
+
+  if (reservation_id === null) {
+    return next({
+      status: 400,
+      message: `The table ${table_id} is not occupied.`,
+    });
+  }
+
+  next();
+};
+
 // ---------------------------------------------------------------------------------------------------------------
 
 //  reservation_id validation
@@ -146,7 +160,7 @@ const tableExists = async (req, res, next) => {
   }
 
   next({
-    status: 400,
+    status: 404,
     message: `No table found with ID ${table_id}.`,
   });
 };
@@ -194,6 +208,18 @@ const update = async (req, res, next) => {
   res.json({ data });
 };
 
+const destroy = async (req, res, next) => {
+  const { table_id, reservation_id } = res.locals.table;
+  console.log("table", res.locals.table);
+  // console.log("reservation", res.locals.reservation);
+
+  await tablesService.resetTable(table_id, reservation_id);
+
+  console.log("Successfully finished reservation and reset table.");
+
+  res.status(200).json({});
+};
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
@@ -212,5 +238,10 @@ module.exports = {
     asyncErrorBoundary(tableIsFree),
     asyncErrorBoundary(tableHasCapacity),
     asyncErrorBoundary(update),
+  ],
+  delete: [
+    asyncErrorBoundary(tableExists),
+    asyncErrorBoundary(tableIsOccupied),
+    asyncErrorBoundary(destroy),
   ],
 };

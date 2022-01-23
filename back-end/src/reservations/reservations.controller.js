@@ -229,7 +229,13 @@ Resource Handlers
 const list = async (req, res) => {
   const date = req.query.date;
 
-  const data = await reservationsService.list(date);
+  let data = null;
+
+  if (date) {
+    data = await reservationsService.listByDate(date);
+  } else {
+    data = await reservationsService.list(date);
+  }
 
   res.json({ data });
 };
