@@ -149,6 +149,10 @@ h1 {
   transition: all 0.25s ease-out;
 }
 
+.res-status {
+  font-weight: 700;
+}
+
 /* TABLES CARD -------------------------------------------------------------------------------------------------- */
 
 .table-list-bg {
@@ -200,7 +204,7 @@ h1 {
 
 .table-occupied {
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 700;
   font-style: italic;
   color: red;
 }

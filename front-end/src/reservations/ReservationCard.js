@@ -8,6 +8,7 @@ const ReservationCard = ({ reservation }) => {
     last_name,
     mobile_number,
     people,
+    status,
     reservation_date,
     reservation_time,
   } = reservation;
@@ -18,9 +19,22 @@ const ReservationCard = ({ reservation }) => {
         {first_name} {last_name}
       </h5>
       <div className="card-body">
-        <div className="card-title">Phone: {mobile_number}</div>
-        <p className="card-text">Time: {reservation_time}</p>
-        <p className="card-text">Guests: {people}</p>
+        <div className="row">
+          <div className="col-4">Phone:</div>
+          <span className="col-7">{mobile_number}</span>
+        </div>
+        <div className="row">
+          <div className="col-4">Time: </div>
+          <span className="col-7">{reservation_time}</span>
+        </div>
+        <div className="row">
+          <div className="col-4">Guests:</div>
+          <span className="col-7">{people}</span>
+        </div>
+        <div className="row">
+          <div className="col-4">Status:</div>
+          <span className="col-7 res-status">{status}</span>
+        </div>
       </div>
       <div className="row mx-1 my-3">
         <div className="col">
