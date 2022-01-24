@@ -26,9 +26,17 @@ const read = (reservation_id) => {
   return knex("reservations").select("*").where({ reservation_id }).first();
 };
 
+const updateStatus = (reservation_id, status) => {
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({ status })
+    .then(() => read(reservation_id)); // Run the knex read query to return the data from reservation_id
+};
+
 module.exports = {
   list,
   listByDate,
   create,
   read,
+  updateStatus,
 };

@@ -53,6 +53,8 @@ async function fetchJson(url, options, onCancel) {
   }
 }
 
+// -------RESERVATIONS-----------------------------------------------------------------------------------------------------------
+
 /**
  * Retrieves all existing reservation.
  * @returns {Promise<[reservation]>}
@@ -84,7 +86,22 @@ export async function createReservation(reservation, signal) {
     signal,
   };
 
-  await fetchJson(url, options, {});
+  return await fetchJson(url, options, {});
+}
+
+export async function updateStatus(reservation_id, status, signal) {
+  console.error("res_id:", reservation_id);
+  console.error("status:", status);
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`);
+
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: { status } }),
+    signal,
+  };
+
+  return await fetchJson(url, options, {});
 }
 
 // -------TABLES-----------------------------------------------------------------------------------------------------------

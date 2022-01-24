@@ -1,5 +1,6 @@
-import React from "react";
-import { Link, withRouter, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { updateStatus } from "../utils/api";
 
 const ReservationCard = ({ reservation }) => {
   const {
@@ -9,7 +10,6 @@ const ReservationCard = ({ reservation }) => {
     mobile_number,
     people,
     status,
-    reservation_date,
     reservation_time,
   } = reservation;
 
@@ -33,22 +33,29 @@ const ReservationCard = ({ reservation }) => {
         </div>
         <div className="row">
           <div className="col-4">Status:</div>
-          <span className="col-7 res-status">{status}</span>
+          <span
+            className="col-7 res-status"
+            data-reservation-id-status={reservation.reservation_id}
+          >
+            {status}
+          </span>
         </div>
       </div>
       <div className="row mx-1 my-3">
         <div className="col">
-          <Link
-            className="seat-link btn btn-secondary"
-            to={{
-              pathname: `/reservations/${reservation_id}/seat`,
-              state: { reservation },
-            }}
-            id="reservation-id"
-          >
-            <i className="fas fa-chair"></i>
-            &nbsp;Seat
-          </Link>
+          {status !== "seated" ? (
+            <Link
+              className="seat-link btn btn-secondary"
+              to={{
+                pathname: `/reservations/${reservation_id}/seat`,
+                state: { reservation },
+              }}
+              id="reservation-id"
+            >
+              <i className="fas fa-chair"></i>
+              &nbsp;Seat
+            </Link>
+          ) : null}
         </div>
       </div>
     </div>

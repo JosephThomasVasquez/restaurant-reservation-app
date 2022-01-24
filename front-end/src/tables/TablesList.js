@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 const TablesList = ({ tables, errorHandler }) => {
   const history = useHistory();
 
-  const [finishTable, setFinishTable] = useState(null);
+  // const [finishTable, setFinishTable] = useState(null);
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
