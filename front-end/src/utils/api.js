@@ -5,8 +5,8 @@
 import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-// const API_BASE_URL = "http://localhost:5000";
+// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = "http://localhost:5000";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -156,4 +156,20 @@ export async function resetTable(table_id, reservation_id, signal) {
   };
 
   await fetchJson(url, options, {});
+}
+
+// -------SEARCH-----------------------------------------------------------------------------------------------------------
+
+/**
+ * Retrieves reservation by mobile_number.
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to a reservation by mobile_number search query
+ */
+
+export async function searchReservation(mobile_number, signal) {
+  const url = new URL(
+    `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`
+  );
+
+  return await fetchJson(url, { headers, signal }, []);
 }
