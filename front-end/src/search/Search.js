@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { searchReservation } from "../utils/api";
+import { listReservations } from "../utils/api";
 
 const Search = ({ errorHandler }) => {
   const history = useHistory();
@@ -16,6 +16,15 @@ const Search = ({ errorHandler }) => {
 
   const handleSearch = () => {
     console.log(searchNumber);
+
+    const abortController = new AbortController();
+
+    listReservations({ searchNumber }, abortController.signal)
+      .then(setSearchNumber)
+      .catch((error) => {
+        errorHandler(error);
+      });
+    return () => abortController.abort();
   };
 
   return (

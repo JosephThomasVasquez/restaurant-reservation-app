@@ -262,6 +262,12 @@ const isBooked = (req, res, next) => {
   next();
 };
 
+const searchByNumber = (req, res, next) => {
+  const query = req.query;
+
+  console.log("query", query);
+};
+
 /*
 --------------------------------------------------------------------------------
 Resource Handlers
@@ -273,11 +279,15 @@ Resource Handlers
  */
 const list = async (req, res) => {
   const date = req.query.date;
+  const mobile_number = req.query.searchNumber;
 
   let data = null;
 
   if (date) {
     data = await reservationsService.listByDate(date);
+  } else if (mobile_number) {
+    console.log(mobile_number);
+    data = await reservationsService.searchByPhone(mobile_number);
   } else {
     data = await reservationsService.list(date);
   }
@@ -343,4 +353,5 @@ module.exports = {
     asyncErrorBoundary(isFinished),
     asyncErrorBoundary(updateStatus),
   ],
+  search: asyncErrorBoundary(searchByNumber),
 };

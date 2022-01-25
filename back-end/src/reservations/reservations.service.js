@@ -15,6 +15,14 @@ const listByDate = (date) => {
     .orderBy("reservation_time");
 };
 
+const searchByPhone = (mobile_number) => {
+  return knex("reservations")
+    .select("*")
+    .where({ mobile_number })
+    .groupBy("reservation_id")
+    .orderBy("reservation_time");
+};
+
 const create = (reservation) => {
   return knex("reservations")
     .insert(reservation)
@@ -39,4 +47,5 @@ module.exports = {
   create,
   read,
   updateStatus,
+  searchByPhone,
 };

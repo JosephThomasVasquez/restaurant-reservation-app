@@ -61,9 +61,8 @@ async function fetchJson(url, options, onCancel) {
  */
 
 export async function listReservations(params, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations`);
-
   if (params) {
+    const url = new URL(`${API_BASE_URL}/reservations`);
     Object.entries(params).forEach(([key, value]) =>
       url.searchParams.append(key, value.toString())
     );
@@ -72,6 +71,7 @@ export async function listReservations(params, signal) {
       .then(formatReservationTime);
   }
 
+  const url = `${API_BASE_URL}/reservations`;
   return await fetchJson(url, { headers, signal }, []);
 }
 
@@ -156,20 +156,4 @@ export async function resetTable(table_id, reservation_id, signal) {
   };
 
   await fetchJson(url, options, {});
-}
-
-// -------SEARCH-----------------------------------------------------------------------------------------------------------
-
-/**
- * Retrieves reservation by mobile_number.
- * @returns {Promise<[reservation]>}
- *  a promise that resolves to a reservation by mobile_number search query
- */
-
-export async function searchReservation(mobile_number, signal) {
-  const url = new URL(
-    `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`
-  );
-
-  return await fetchJson(url, { headers, signal }, []);
 }
