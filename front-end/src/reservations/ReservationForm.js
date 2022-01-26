@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { createReservation } from "../utils/api";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { readReservation, createReservation } from "../utils/api";
 import BusinessHoursInfo from "../layout/businessHours/BusinessHoursInfo";
 
 const ReservationForm = ({ errorHandler }) => {
   const history = useHistory();
+  const location = useLocation();
+  const reservationData = location.state.reservation;
 
   //   Set today's date as a default value for reservation state in the correct format yyyy/mm/dd
   const today = new Date().toISOString().split("T")[0];
@@ -20,10 +22,38 @@ const ReservationForm = ({ errorHandler }) => {
 
   const [reservation, setReservation] = useState(initialFormData);
 
+  useEffect(() => {
+    const abortController = new AbortController();
+    console.log("location", reservationData);
+
+    const getReservation = async () => {
+      try {
+        const response = await readReservation(
+          reservationData.reservation_id,
+          abortController.signal
+        );
+
+        if (response) {
+          let formatDate = response.reservation_date.split("T")[0];
+          setReservation({ ...response, reservation_date: formatDate });
+        } else {
+          setReservation(initialFormData);
+        }
+      } catch (error) {
+        errorHandler(error);
+      }
+    };
+
+    getReservation();
+
+    return () => abortController.abort();
+  }, [reservationData]);
+
   const handleChange = ({ target }) => {
     // Make sure the people value is a number
     if (target.name === "people") {
       setReservation({ ...reservation, [target.name]: Number(target.value) });
+      console.log(reservation.reservation_date);
     } else {
       setReservation({ ...reservation, [target.name]: target.value });
     }

@@ -39,6 +39,9 @@ function Routes({ errorHandler }) {
       <Route path="/reservations/new">
         <ReservationForm errorHandler={errorHandler} />
       </Route>
+      <Route path="/reservations/:reservationId/edit">
+        <ReservationForm errorHandler={errorHandler} />
+      </Route>
       <Route path="/reservations/:reservationsId/seat">
         <SeatReservation errorHandler={errorHandler} />
       </Route>

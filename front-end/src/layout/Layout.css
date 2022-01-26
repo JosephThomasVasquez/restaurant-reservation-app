@@ -153,6 +153,15 @@ h1 {
   font-weight: 700;
 }
 
+.seat-link,
+.edit-link,
+.cancel-link {
+  text-align: center;
+  width: 100%;
+  padding: 2px;
+  font-size: 1rem;
+}
+
 /* TABLES CARD -------------------------------------------------------------------------------------------------- */
 
 .table-list-bg {

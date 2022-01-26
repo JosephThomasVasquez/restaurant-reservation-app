@@ -88,6 +88,17 @@ export async function createReservation(reservation, signal) {
   return await fetchJson(url, options, {});
 }
 
+export async function readReservation(reservation_id, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
+
+  const options = {
+    method: "GET",
+    headers,
+    signal,
+  };
+  return await fetchJson(url, options, {});
+}
+
 export async function updateStatus(reservation_id, status, signal) {
   console.error("res_id:", reservation_id);
   console.error("status:", status);

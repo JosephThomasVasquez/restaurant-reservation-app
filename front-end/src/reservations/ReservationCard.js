@@ -41,11 +41,11 @@ const ReservationCard = ({ reservation }) => {
           </span>
         </div>
       </div>
-      <div className="row mx-1 my-3">
-        <div className="col">
+      <div className="row my-3 d-flex justify-content-center mx-2">
+        <div className="col-4 px-2">
           {status !== "seated" ? (
             <Link
-              className="seat-link btn btn-secondary"
+              className="seat-link btn btn-primary"
               to={{
                 pathname: `/reservations/${reservation_id}/seat`,
                 state: { reservation },
@@ -56,6 +56,32 @@ const ReservationCard = ({ reservation }) => {
               &nbsp;Seat
             </Link>
           ) : null}
+        </div>
+        <div className="col-4 px-2">
+          <Link
+            className="edit-link btn btn-secondary"
+            to={{
+              pathname: `/reservations/${reservation_id}/edit`,
+              state: { reservation },
+            }}
+            id="reservation-id"
+          >
+            <span className="oi oi-pencil"></span>
+            &nbsp;Edit
+          </Link>
+        </div>
+        <div className="col-4 px-2">
+          <Link
+            className="cancel-link btn btn-danger"
+            to={{
+              pathname: `/reservations/${reservation_id}/seat`,
+              state: { reservation },
+            }}
+            id="reservation-id"
+          >
+            <span className="oi oi-pencil"></span>
+            &nbsp;Cancel
+          </Link>
         </div>
       </div>
     </div>
