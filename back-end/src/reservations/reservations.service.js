@@ -18,9 +18,15 @@ const listByDate = (date) => {
 const searchByPhone = (mobile_number) => {
   return knex("reservations")
     .select("*")
-    .where({ mobile_number })
-    .groupBy("reservation_id")
-    .orderBy("reservation_time");
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .whereNot({ status: "cancelled" })
+    .orderBy("reservation_date");
+  // .where("mobile_number", `like`, `%${mobile_number}%`)
+  // .groupBy("reservation_id")
+  // .orderBy("reservation_time");
 };
 
 const create = (reservation) => {
