@@ -307,6 +307,16 @@ const create = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  const { reservation_id } = res.locals.reservation;
+
+  const updatedReservation = { ...req.body.data, reservation_id };
+
+  const data = await reservationsService.update(updatedReservation);
+
+  res.json({ data });
+};
+
 const read = (req, res, next) => {
   const data = res.locals.reservation;
 
@@ -343,6 +353,24 @@ module.exports = {
     asyncErrorBoundary(hasMinPeople),
     asyncErrorBoundary(peopleIsValid),
     asyncErrorBoundary(create),
+  ],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(isBooked),
+    asyncErrorBoundary(hasFirstName),
+    asyncErrorBoundary(hasLastName),
+    asyncErrorBoundary(hasMobileNumber),
+    asyncErrorBoundary(hasDate),
+    asyncErrorBoundary(hasValidDate),
+    asyncErrorBoundary(dateInFuture),
+    asyncErrorBoundary(dateNotAvailable),
+    asyncErrorBoundary(hasTime),
+    asyncErrorBoundary(hasValidTime),
+    asyncErrorBoundary(timeIsFuture),
+    asyncErrorBoundary(hasPeople),
+    asyncErrorBoundary(hasMinPeople),
+    asyncErrorBoundary(peopleIsValid),
+    asyncErrorBoundary(update),
   ],
   read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
   updateStatus: [

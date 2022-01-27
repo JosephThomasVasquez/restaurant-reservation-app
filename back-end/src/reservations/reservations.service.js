@@ -26,9 +26,6 @@ const searchByPhone = (mobile_number) => {
     )
     .whereNot({ status: "cancelled" })
     .orderBy("reservation_date");
-  // .where("mobile_number", `like`, `%${mobile_number}%`)
-  // .groupBy("reservation_id")
-  // .orderBy("reservation_time");
 };
 
 const create = (reservation) => {
@@ -36,6 +33,14 @@ const create = (reservation) => {
     .insert(reservation)
     .returning("*")
     .then((createdRecords) => createdRecords[0]);
+};
+
+const update = (updatedReservation) => {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_id: updatedReservation.reservation_id })
+    .update(updatedReservation, "*")
+    .then((updatedRecords) => updatedRecords[0]);
 };
 
 const read = (reservation_id) => {
@@ -53,6 +58,7 @@ module.exports = {
   list,
   listByDate,
   create,
+  update,
   read,
   updateStatus,
   searchByPhone,
