@@ -112,30 +112,9 @@ const tableHasCapacity = (req, res, next) => {
 const tableIsNotOccupied = (req, res, next) => {
   const { table } = res.locals;
 
-  console.log("res locals RESID", res.locals.reservation_id);
-
-  console.log(
-    "333333333333333333333333333333333333333333333333333333333333",
-    res.locals.table,
-    "res_id:",
-    table.reservation_id
-  );
-
-  if (table.reservation_id === null) {
-    console.log(
-      "9999999999999999999999999999999999999999999999999999999",
-      res.locals.table,
-      "res_id:",
-      table.reservation_id
-    );
+  if (table.reservation_id !== null) {
     next();
   } else {
-    console.log(
-      "444444444444444444444444444444444444444444444444444",
-      res.locals.table,
-      "res_id:",
-      table.reservation_id
-    );
     return next({
       status: 400,
       message: `The table ${table.table_id} is not occupied.`,
@@ -228,30 +207,21 @@ const create = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  console.log("found table", res.locals.table.table_id);
-
   const { table_id } = res.locals.table;
 
-  //   const table_id = req.params.table_id;
   const { reservation_id } = req.body.data;
 
-  const data = tablesService.update(table_id, reservation_id);
-  // console.log("data:", data);
-  res.locals.table.reservation_id = reservation_id;
+  const data = await tablesService.update(table_id, reservation_id);
 
   res.json({ data });
 };
 
 const destroy = async (req, res, next) => {
-  console.log("00000000000000000000000000000000000000000000", res.locals.table);
-
   const { table_id, reservation_id } = res.locals.table;
 
-  // console.log("reservation", res.locals.reservation);
+  console.log("table table table:", res.locals.table);
 
   await tablesService.resetTable(table_id, reservation_id);
-
-  console.log("Successfully finished reservation and reset table.");
 
   res.status(200).json({});
 };
@@ -271,8 +241,8 @@ module.exports = {
     asyncErrorBoundary(hasValidProperties),
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(tableExists),
-    asyncErrorBoundary(tableIsFree),
     asyncErrorBoundary(statusIsSeated),
+    asyncErrorBoundary(tableIsFree),
     asyncErrorBoundary(tableHasCapacity),
     asyncErrorBoundary(update),
   ],

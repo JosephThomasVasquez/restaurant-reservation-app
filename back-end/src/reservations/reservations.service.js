@@ -7,10 +7,12 @@ const list = () => {
     .orderBy("reservation_time");
 };
 
-const listByDate = (date) => {
+const listByDate = (reservation_date) => {
   return knex("reservations")
     .select("*")
-    .where({ reservation_date: date })
+    .where({ reservation_date })
+    .whereNot({ status: "finished" })
+    .whereNot({ status: "cancelled" })
     .groupBy("reservation_id")
     .orderBy("reservation_time");
 };

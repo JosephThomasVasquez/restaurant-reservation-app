@@ -12,7 +12,7 @@ const hasValidProperties = (req, res, next) => {
   if (!req.body.data)
     return next({
       status: 400,
-      message: `Data from the request body is missing.`,
+      message: `Missing data from the request body.`,
     });
 
   next();
@@ -97,10 +97,15 @@ const dateNotAvailable = (req, res, next) => {
 };
 
 const dateInFuture = (req, res, next) => {
-  const today = Date.now();
-  const validDate = new Date(res.locals.reservation_date).getTime();
+  const { reservation_date, reservation_time } = req.body.data;
 
-  if (today > validDate) {
+  const today = new Date();
+  const validDate = new Date(`${reservation_date} ${reservation_time}`);
+
+  console.log("today", today);
+  console.log("validDate", validDate);
+
+  if (validDate < today) {
     return next({
       status: 400,
       message: `Must select a date in the future.`,
@@ -151,7 +156,7 @@ const timeIsFuture = (req, res, next) => {
   } else {
     next({
       status: 400,
-      message: `Must have a valid reservation_time.`,
+      message: `Must have a valid reservation_time between 10:30am - 09:30pm.`,
     });
   }
 };
@@ -204,7 +209,7 @@ const reservationExists = async (req, res, next) => {
 
   const reservation = await reservationsService.read(reservationId);
 
-  console.log("reservationExists:", reservation);
+  // console.log("reservationExists:", reservation);
 
   if (reservation) {
     res.locals.reservation = reservation;

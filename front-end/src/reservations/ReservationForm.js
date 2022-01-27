@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { readReservation, createReservation } from "../utils/api";
+import {
+  readReservation,
+  createReservation,
+  updateReservation,
+} from "../utils/api";
 import BusinessHoursInfo from "../layout/businessHours/BusinessHoursInfo";
 
 const ReservationForm = ({ errorHandler }) => {
   const history = useHistory();
   const location = useLocation();
-  const reservationData = location.state.reservation;
+  const reservationData = location.state?.reservation;
 
   //   Set today's date as a default value for reservation state in the correct format yyyy/mm/dd
   const today = new Date().toISOString().split("T")[0];
@@ -24,7 +28,6 @@ const ReservationForm = ({ errorHandler }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    console.log("location", reservationData);
 
     const getReservation = async () => {
       try {
@@ -44,7 +47,9 @@ const ReservationForm = ({ errorHandler }) => {
       }
     };
 
-    getReservation();
+    if (reservationData) {
+      getReservation();
+    }
 
     return () => abortController.abort();
   }, [reservationData]);
@@ -67,18 +72,29 @@ const ReservationForm = ({ errorHandler }) => {
       //   errorHandler();
 
       try {
-        //   Send a POST request of the reservation to the backend
-        const response = await createReservation(
-          reservation,
-          abortController.abort()
-        );
+        if (reservationData) {
+          //   Send a POST request of the reservation to the backend
+          const response = await updateReservation(
+            reservation,
+            abortController.abort()
+          );
 
-        // console.log("response", response.data);
-        setReservation(response);
-        console.log("reservation:", reservation);
-        history.push(`/dashboard?=${reservation.reservation_date}`);
+          setReservation(response);
+          // console.log("reservation:", reservation);
+          history.push(`/dashboard?=${reservation.reservation_date}`);
+          errorHandler(null);
+        } else {
+          //   Send a POST request of the reservation to the backend
+          const response = await createReservation(
+            reservation,
+            abortController.abort()
+          );
 
-        errorHandler(null);
+          setReservation(response);
+          // console.log("reservation:", reservation);
+          history.push(`/dashboard?=${reservation.reservation_date}`);
+          errorHandler(null);
+        }
       } catch (error) {
         console.log(error);
         error && errorHandler(error);
@@ -97,14 +113,18 @@ const ReservationForm = ({ errorHandler }) => {
     <div>
       <div className="row">
         <div className="col">
-          <h1>Create Reservation</h1>
+          {reservationData ? (
+            <h1>Edit Reservation</h1>
+          ) : (
+            <h1>Create Reservation</h1>
+          )}
         </div>
       </div>
 
       <BusinessHoursInfo />
 
       <form onSubmit={handleSubmit}>
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           <div className="col-3 mb-3">
             <label htmlFor="first_name" className="form-label">
               First Name
@@ -137,7 +157,7 @@ const ReservationForm = ({ errorHandler }) => {
           </div>
         </div>
 
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           <div className="col-3 mb-3">
             <label htmlFor="mobile_number" className="form-label">
               Mobile Number
@@ -171,7 +191,7 @@ const ReservationForm = ({ errorHandler }) => {
           </div>
         </div>
 
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           <div className="col-3 mb-3">
             <label htmlFor="reservation_date" className="form-label">
               Reservation Date
@@ -203,7 +223,7 @@ const ReservationForm = ({ errorHandler }) => {
           </div>
         </div>
 
-        <div className="row my-2">
+        <div className="row my-2 d-flex justify-content-center">
           <div className="col-1">
             <button type="submit" className="btn btn-primary form-control">
               Submit

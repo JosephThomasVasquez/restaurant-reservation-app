@@ -43,7 +43,8 @@ const SeatReservation = ({ errorHandler }) => {
       //   errorHandler();
 
       try {
-        //   Send a PUT request of the tableId and reservationId to the backend
+        //   Send a PUT request of the tableId and reservationId to the
+
         await updateTable(
           seat.tableId,
           seat.reservationId,

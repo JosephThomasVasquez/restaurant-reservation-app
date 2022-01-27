@@ -78,6 +78,7 @@ const ReservationCard = ({ reservation }) => {
               state: { reservation },
             }}
             id="reservation-id"
+            data-reservation-id-cancel={reservation.reservation_id}
           >
             <span className="oi oi-pencil"></span>
             &nbsp;Cancel
