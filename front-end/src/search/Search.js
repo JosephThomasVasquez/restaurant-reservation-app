@@ -37,7 +37,7 @@ const Search = ({ errorHandler }) => {
   return (
     <div>
       <div className="row">
-        <div className="col">
+        <div className="col-12 text-center">
           <h1>Search</h1>
         </div>
       </div>
@@ -45,7 +45,7 @@ const Search = ({ errorHandler }) => {
         <div className="col text-center">Search by phone number</div>
       </div>
       <div className="row d-flex justify-content-center">
-        <div className="col-3 pr-0">
+        <div className="col-sm-3 pr-0 mt-3">
           <input
             type="tel"
             name="mobile_number"
@@ -58,10 +58,10 @@ const Search = ({ errorHandler }) => {
             required
           />
         </div>
-        <div className="col-1 pl-0">
+        <div className="col-lg-1 col-md-2 col-sm-2 px-0 mt-3">
           <button
             type="button"
-            className="btn btn-primary form-control w-75"
+            className="btn btn-primary form-control"
             onClick={handleSearch}
           >
             Find

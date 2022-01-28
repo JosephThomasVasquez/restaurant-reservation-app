@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import { updateStatus } from "../utils/api";
 
-const ReservationCard = ({ reservation }) => {
+const ReservationCard = ({ reservation, errorHandler }) => {
+  const history = useHistory();
+
   const {
     reservation_id,
     first_name,
@@ -13,8 +15,34 @@ const ReservationCard = ({ reservation }) => {
     reservation_time,
   } = reservation;
 
+  const handleCancel = async () => {
+    if (
+      window.confirm(
+        "Do you want to cancel this reservation? This cannot be undone."
+      )
+    ) {
+      console.log("Confirmed!");
+      try {
+        const abortController = new AbortController();
+
+        await updateStatus(
+          reservation_id,
+          "cancelled",
+          abortController.abort()
+        );
+
+        errorHandler(null);
+        history.go();
+      } catch (error) {
+        console.log(error);
+        // setTableError(error);
+        error && errorHandler(error);
+      }
+    }
+  };
+
   return (
-    <div className="card col-3 shadow m-3 p-0 reservation-card">
+    <div className="card col-md-3 col-sm-12 col shadow m-3 p-0 reservation-card">
       <h5 className="card-header font-weight-bold">
         {first_name} {last_name}
       </h5>
@@ -71,18 +99,19 @@ const ReservationCard = ({ reservation }) => {
           </Link>
         </div>
         <div className="col-4 px-2">
-          <Link
-            className="cancel-link btn btn-danger"
+          <button
+            className="cancel-link btn btn-outline-danger"
             to={{
               pathname: `/reservations/${reservation_id}/seat`,
               state: { reservation },
             }}
             id="reservation-id"
             data-reservation-id-cancel={reservation.reservation_id}
+            onClick={handleCancel}
           >
-            <span className="oi oi-pencil"></span>
+            <span className="oi oi-ban"></span>
             &nbsp;Cancel
-          </Link>
+          </button>
         </div>
       </div>
     </div>

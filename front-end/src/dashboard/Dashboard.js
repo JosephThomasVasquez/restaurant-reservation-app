@@ -57,19 +57,23 @@ function Dashboard({ date, errorHandler }) {
 
   return (
     <main>
-      <h1 className="d-inline-block">Dashboard</h1>
-      {reservations.length >= 1 ? (
-        <span className="mx-3">
-          <span className="reservation-count">{reservations.length}</span>
-          &nbsp;reservations
-        </span>
-      ) : null}
-
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {date}</h4>
-      </div>
       <div className="row">
-        <div className="col-1 pr-0">
+        <div className="col-12 text-center">
+          <h1 className="d-inline-block">Dashboard</h1>
+          <h4 className="mb-0">Reservations for {date}</h4>
+          <span className="text-right">
+            {reservations.length >= 1 ? (
+              <span className="mx-3">
+                <span className="reservation-count">{reservations.length}</span>
+                &nbsp;reservations
+              </span>
+            ) : null}
+          </span>
+        </div>
+      </div>
+
+      <div className="d-flex justify-content-center mt-3">
+        <div className="col-md-2 col-sm-3 col-xs-12 col">
           <button
             name="previous"
             className="btn btn-secondary btn-sm btn-block"
@@ -79,7 +83,7 @@ function Dashboard({ date, errorHandler }) {
           </button>
         </div>
 
-        <div className="col-1 pr-0">
+        <div className="col-md-2 col-sm-3 col-xs-12 col">
           <button
             name="today"
             className="btn btn-secondary btn-sm btn-block"
@@ -89,7 +93,7 @@ function Dashboard({ date, errorHandler }) {
           </button>
         </div>
 
-        <div className="col-1 pr-0">
+        <div className="col-md-2 col-sm-3 col-xs-12 col">
           <button
             name="next"
             className="btn btn-secondary btn-sm btn-block"
@@ -99,12 +103,16 @@ function Dashboard({ date, errorHandler }) {
           </button>
         </div>
       </div>
+
       <div className="container-fluid m-0 p-0">
         <div className="row">
-          <div className="col-9 m-0 p-0">
-            <ReservationList reservations={reservations} />
+          <div className="col-lg-9 col-md-8 col-sm-12 col m-0 p-0">
+            <ReservationList
+              reservations={reservations}
+              errorHandler={errorHandler}
+            />
           </div>
-          <div className="col-3 m-0 p-0 pr-3">
+          <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 col m-0 p-0 pr-3">
             <TablesList tables={tables} errorHandler={errorHandler} />
           </div>
         </div>

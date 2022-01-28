@@ -83,7 +83,7 @@ const TablesList = ({ tables, errorHandler }) => {
   ));
 
   return (
-    <div className="container mt-3 shadow table-list-bg">
+    <div className="container-fluid mt-3 shadow table-list-bg">
       <div className="row">
         <div className="tables-header">
           <div className="text-center font-weight-bold">Tables</div>

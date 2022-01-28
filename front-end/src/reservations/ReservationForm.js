@@ -112,7 +112,7 @@ const ReservationForm = ({ errorHandler }) => {
   return (
     <div>
       <div className="row">
-        <div className="col">
+        <div className="col-12 text-center">
           {reservationData ? (
             <h1>Edit Reservation</h1>
           ) : (
@@ -121,11 +121,15 @@ const ReservationForm = ({ errorHandler }) => {
         </div>
       </div>
 
-      <BusinessHoursInfo />
+      <div className="d-flex justify-content-center">
+        <div className="col-md-8 col-sm-12 m-auto">
+          <BusinessHoursInfo />
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <div className="row d-flex justify-content-center">
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="first_name" className="form-label">
               First Name
             </label>
@@ -141,7 +145,7 @@ const ReservationForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="last_name" className="form-label">
               Last Name
             </label>
@@ -158,7 +162,7 @@ const ReservationForm = ({ errorHandler }) => {
         </div>
 
         <div className="row d-flex justify-content-center">
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="mobile_number" className="form-label">
               Mobile Number
             </label>
@@ -173,7 +177,7 @@ const ReservationForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="people" className="form-label">
               Number of Guests
             </label>
@@ -192,7 +196,7 @@ const ReservationForm = ({ errorHandler }) => {
         </div>
 
         <div className="row d-flex justify-content-center">
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="reservation_date" className="form-label">
               Reservation Date
             </label>
@@ -207,7 +211,7 @@ const ReservationForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="reservation_time" className="form-label">
               Reservation Time
             </label>
@@ -224,12 +228,12 @@ const ReservationForm = ({ errorHandler }) => {
         </div>
 
         <div className="row my-2 d-flex justify-content-center">
-          <div className="col-1">
+          <div className="col-lg-2 col-md-2 col-sm col-6 col">
             <button type="submit" className="btn btn-primary form-control">
               Submit
             </button>
           </div>
-          <div className="col-1">
+          <div className="col-lg-2 col-md-2 col-sm col-6 col">
             <button
               type="button"
               className="btn btn-secondary form-control"

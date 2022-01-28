@@ -70,7 +70,7 @@ const SeatReservation = ({ errorHandler }) => {
   return (
     <div>
       <div className="row">
-        <div className="col">
+        <div className="col text-center">
           <h1>Seat Reservation</h1>
         </div>
       </div>
@@ -86,10 +86,10 @@ const SeatReservation = ({ errorHandler }) => {
         <div className="row">
           <div className="col text-center">Table Name - Table Capacity</div>
         </div>
-        <div className="row">
-          <div className="col text-center">
+        <div className="row d-flex justify-content-center">
+          <div className="col-md-4 col-lg-4 mb-3 text-center">
             <select
-              className="form-control custom-select selectpicker show-tick w-25"
+              className="form-control custom-select selectpicker show-tick"
               onChange={handleChange}
               required
             >
@@ -99,12 +99,12 @@ const SeatReservation = ({ errorHandler }) => {
           </div>
         </div>
         <div className="row justify-content-md-center my-2">
-          <div className="col-1">
+          <div className="col-md-2 col-sm col-6">
             <button type="submit" className="btn btn-primary form-control">
               Submit
             </button>
           </div>
-          <div className="col-1">
+          <div className="col-md-2 col-sm col-6">
             <button
               type="button"
               className="btn btn-secondary form-control"

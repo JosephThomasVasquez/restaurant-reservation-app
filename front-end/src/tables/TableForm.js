@@ -50,14 +50,14 @@ const TablesForm = ({ errorHandler }) => {
   return (
     <div>
       <div className="row">
-        <div className="col">
+        <div className="col-12 text-center">
           <h1>Create Table</h1>
         </div>
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-3 mb-3">
+        <div className="row d-flex justify-content-center">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="table_name" className="form-label">
               Table Name
             </label>
@@ -74,7 +74,7 @@ const TablesForm = ({ errorHandler }) => {
             />
           </div>
 
-          <div className="col-3 mb-3">
+          <div className="col-md-4 col-lg-4 mb-3">
             <label htmlFor="capacity" className="form-label">
               Capacity
             </label>
@@ -91,13 +91,13 @@ const TablesForm = ({ errorHandler }) => {
           </div>
         </div>
 
-        <div className="row my-2">
-          <div className="col-1">
+        <div className="row d-flex justify-content-center my-2">
+          <div className="col-md-2 col-sm col-6">
             <button type="submit" className="btn btn-primary form-control">
               Submit
             </button>
           </div>
-          <div className="col-1">
+          <div className="col-md-2 col-sm col-6">
             <button
               type="button"
               className="btn btn-secondary form-control"
