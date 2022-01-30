@@ -77,7 +77,7 @@ const hasDate = (req, res, next) => {
 
 // Checks if reservation_date is a valid date
 const hasValidDate = (req, res, next) => {
-  let isValid = new Date(res.locals.reservation_date).toString();
+  let isValid = new Date(res.locals.reservation_date).getUTCDay();
 
   if (isValid === "Invalid Date") {
     return next({
@@ -90,10 +90,8 @@ const hasValidDate = (req, res, next) => {
 
 // Checks if reservation_date is not on Tuesday
 const dateNotAvailable = (req, res, next) => {
-  let getDate = new Date(res.locals.reservation_date).getDay();
-  let closedDay = 1;
-
-  console.log("getDate", getDate);
+  let getDate = new Date(res.locals.reservation_date).getUTCDay();
+  let closedDay = 2;
 
   if (getDate === closedDay) {
     return next({
@@ -110,8 +108,6 @@ const dateInFuture = (req, res, next) => {
 
   const today = new Date();
   const validDate = new Date(`${reservation_date} ${reservation_time}`);
-
-  console.log("validDate", validDate);
 
   if (validDate < today) {
     return next({
