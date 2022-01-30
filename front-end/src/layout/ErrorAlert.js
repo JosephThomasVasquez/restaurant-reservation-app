@@ -9,6 +9,7 @@ import React from "react";
  */
 
 function ErrorAlert({ error }) {
+  // Modified Bootstrap Alert componenet to have a close button 'x'
   return (
     error && (
       <div

@@ -5,8 +5,8 @@
 import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-// const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -74,6 +74,12 @@ export async function listReservations(params, signal) {
   const url = `${API_BASE_URL}/reservations`;
   return await fetchJson(url, { headers, signal }, []);
 }
+
+/**
+ * Updates reservation.
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to a possibly empty array of reservation saved in the database.
+ */
 
 export async function updateReservation(reservation, signal) {
   const url = new URL(

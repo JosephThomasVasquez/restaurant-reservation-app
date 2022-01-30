@@ -3,7 +3,6 @@
  */
 function errorHandler(error, request, response, next) {
   const { status = 500, message = "Something went wrong!" } = error;
-  console.error("error:", error);
   response.status(status).json({ error: message });
 }
 

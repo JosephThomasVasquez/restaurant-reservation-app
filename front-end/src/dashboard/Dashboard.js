@@ -23,6 +23,7 @@ function Dashboard({ date, errorHandler }) {
   useEffect(loadDashboard, [date]);
   useEffect(loadTables, [reservations]);
 
+  // fetches reservations from the backend
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
@@ -32,12 +33,14 @@ function Dashboard({ date, errorHandler }) {
     return () => abortController.abort();
   }
 
+  // fetches tables from the backend
   function loadTables() {
     const abortController = new AbortController();
     listTables(abortController.signal).then(setTables).catch(setTablesError);
     return () => abortController.abort();
   }
 
+  // Handler for fetching reservations with date query
   const handleDateChange = ({ target }) => {
     switch (target.name) {
       case "previous":

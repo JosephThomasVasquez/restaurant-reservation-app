@@ -1,5 +1,6 @@
 import React from "react";
 
+// Business Hours information for user reference. Displayed only on the Create & Edit Reservation component
 const BusinessHoursInfo = () => {
   const businessHours = {
     openHours: "10:30am",
@@ -14,7 +15,6 @@ const BusinessHoursInfo = () => {
       "Sunday",
     ],
   };
-  // console.log(businessHours);
 
   return (
     <div className="business-hours-container p-2 mb-5">

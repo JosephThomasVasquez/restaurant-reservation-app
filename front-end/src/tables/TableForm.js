@@ -27,7 +27,7 @@ const TablesForm = ({ errorHandler }) => {
       const abortController = new AbortController();
 
       try {
-        //   Send a POST request of the table to the backend
+        //   Send a POST request of the table data to the backend and creates a record in the database
         const response = await createTable(table, abortController.abort());
 
         setTable(response);
@@ -35,7 +35,6 @@ const TablesForm = ({ errorHandler }) => {
 
         errorHandler(null);
       } catch (error) {
-        console.log(error);
         error && errorHandler(error);
       }
     };

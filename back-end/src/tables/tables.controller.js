@@ -9,8 +9,8 @@ Validation handlers
 --------------------------------------------------------------------------------
 */
 
-// Checks if request body values are valid
-const hasValidProperties = (req, res, next) => {
+// Checks if request body data is missing
+const hasData = (req, res, next) => {
   if (!req.body.data)
     return next({
       status: 400,
@@ -20,6 +20,7 @@ const hasValidProperties = (req, res, next) => {
   next();
 };
 
+// Checks if table_name is missing
 const hasTableName = (req, res, next) => {
   const { data: { table_name } = {} } = req.body;
 
@@ -34,6 +35,7 @@ const hasTableName = (req, res, next) => {
   next();
 };
 
+// Checks if table_name is at least 2 characters
 const validTableCharacterLength = (req, res, next) => {
   if (res.locals.table_name.length < 2) {
     return next({
@@ -44,6 +46,7 @@ const validTableCharacterLength = (req, res, next) => {
   next();
 };
 
+// Checks if capacity is missing
 const hasCapacity = (req, res, next) => {
   const { data: { capacity } = {} } = req.body;
 
@@ -58,30 +61,31 @@ const hasCapacity = (req, res, next) => {
   next();
 };
 
+// Checks if capacity is at least 1
 const hasMinCapacity = (req, res, next) => {
   if (res.locals.capacity <= 0) {
     return next({
       status: 400,
-      message: `Table must have a table_name.`,
+      message: `Must have at least 1 capacity.`,
     });
   }
   next();
 };
 
+// Checks if capacity is a number
 const capacityIsNaN = (req, res, next) => {
   if (typeof res.locals.capacity !== "number") {
     return next({
       status: 400,
-      message: `The property capacity must have a number.`,
+      message: `The property capacity must be a number.`,
     });
   }
   next();
 };
 
-// ---------------------------------------------------------------------------------------------------------------
+// SEAT RESERVATION VALIDATORS ---------------------------------------------------------------------------------------------------------------
 
-// Seat reservation - Table validation
-
+// Checks if table is "free", if table.reservation_id exists it is not "free"
 const tableIsFree = (req, res, next) => {
   const { table_id, reservation_id } = res.locals.table;
 
@@ -95,6 +99,7 @@ const tableIsFree = (req, res, next) => {
   next();
 };
 
+// Checks if table has enough capacity for the amount of people
 const tableHasCapacity = (req, res, next) => {
   const { people } = res.locals.reservation;
   const { capacity } = res.locals.table;
@@ -102,13 +107,14 @@ const tableHasCapacity = (req, res, next) => {
   if (people > capacity) {
     return next({
       status: 400,
-      message: `This table does not have the capacity for ${people} people. Please select a table that has equal or more capcity.`,
+      message: `This table does not have the capacity for ${people} people. Please select a table that has equal or more capacity.`,
     });
   }
 
   next();
 };
 
+// Checks if table is not occupied
 const tableIsNotOccupied = (req, res, next) => {
   const { table } = res.locals;
 
@@ -122,9 +128,22 @@ const tableIsNotOccupied = (req, res, next) => {
   }
 };
 
-// ---------------------------------------------------------------------------------------------------------------
+// STATUS VALIDATORS ----------------------------------------------------------------------------------------------
 
-//  reservation_id validation
+const statusIsSeated = async (req, res, next) => {
+  const { reservation_id, status } = res.locals.reservation;
+
+  if (status === "seated") {
+    return next({
+      status: 400,
+      message: `The reservation ${reservation_id} is already seated at a table.`,
+    });
+  }
+
+  next();
+};
+
+//  Checks if reservation exists
 const reservationExists = async (req, res, next) => {
   const { reservation_id } = req.body.data;
 
@@ -148,19 +167,7 @@ const reservationExists = async (req, res, next) => {
   }
 };
 
-const statusIsSeated = async (req, res, next) => {
-  const { reservation_id, status } = res.locals.reservation;
-
-  if (status === "seated") {
-    return next({
-      status: 400,
-      message: `The reservation ${reservation_id} is already seated at a table.`,
-    });
-  }
-
-  next();
-};
-
+//  Checks if table exists
 const tableExists = async (req, res, next) => {
   const { table_id } = req.params;
 
@@ -183,18 +190,17 @@ Resource Handlers
 --------------------------------------------------------------------------------
 */
 
-/* List handler for tables resources
-      /GET
- */
+// List handler for tables resources
+// /GET
+
 const list = async (req, res) => {
   const data = await tablesService.list();
 
   res.json({ data });
 };
 
-/* Create table handler
-      /POST
-*/
+// Create table handler
+// /POST
 
 const create = async (req, res, next) => {
   try {
@@ -206,6 +212,9 @@ const create = async (req, res, next) => {
   }
 };
 
+// Update table handler
+// /PUT
+
 const update = async (req, res, next) => {
   const { table_id } = res.locals.table;
 
@@ -216,10 +225,11 @@ const update = async (req, res, next) => {
   res.json({ data });
 };
 
-const destroy = async (req, res, next) => {
-  const { table_id, reservation_id } = res.locals.table;
+// Reset table handler
+// /PUT
 
-  console.log("table table table:", res.locals.table);
+const resetTable = async (req, res, next) => {
+  const { table_id, reservation_id } = res.locals.table;
 
   await tablesService.resetTable(table_id, reservation_id);
 
@@ -229,7 +239,7 @@ const destroy = async (req, res, next) => {
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
-    asyncErrorBoundary(hasValidProperties),
+    asyncErrorBoundary(hasData),
     asyncErrorBoundary(hasTableName),
     asyncErrorBoundary(validTableCharacterLength),
     asyncErrorBoundary(hasCapacity),
@@ -238,7 +248,7 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   update: [
-    asyncErrorBoundary(hasValidProperties),
+    asyncErrorBoundary(hasData),
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(tableExists),
     asyncErrorBoundary(statusIsSeated),
@@ -246,9 +256,9 @@ module.exports = {
     asyncErrorBoundary(tableHasCapacity),
     asyncErrorBoundary(update),
   ],
-  delete: [
+  resetTable: [
     asyncErrorBoundary(tableExists),
     asyncErrorBoundary(tableIsNotOccupied),
-    asyncErrorBoundary(destroy),
+    asyncErrorBoundary(resetTable),
   ],
 };

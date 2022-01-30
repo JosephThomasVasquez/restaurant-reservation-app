@@ -17,14 +17,13 @@ function Layout() {
   const [errors, setErrors] = useState(null);
 
   // Error handler for displaying errors from the API
+  // This handles the display of all errors found which are sent as props to all components requiring error handlers.
   const errorHandler = (foundErrors) => {
-    console.log("found Errors:", foundErrors);
     if (foundErrors) {
       setErrors(foundErrors);
     } else {
       setErrors(null);
     }
-    console.log("errors", errors);
   };
 
   return (

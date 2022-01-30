@@ -14,14 +14,18 @@ const SeatReservation = ({ errorHandler }) => {
   };
 
   const [tables, setTables] = useState([]);
-  const [errors, setErrors] = useState(null);
   const [seat, setSeat] = useState({ ...initialFormData });
 
+  // Fetches tables from backend
   useEffect(loadTables, []);
 
   function loadTables() {
     const abortController = new AbortController();
-    listTables(abortController.signal).then(setTables).catch(setErrors);
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch((error) => {
+        error && errorHandler(error);
+      });
     return () => abortController.abort();
   }
 
@@ -40,11 +44,9 @@ const SeatReservation = ({ errorHandler }) => {
 
     const submitSeatReservation = async () => {
       const abortController = new AbortController();
-      //   errorHandler();
 
       try {
-        //   Send a PUT request of the tableId and reservationId to the
-
+        //   Send a PUT request of the tableId and reservationId to the backend to update the reservation status and table.reservation_id columns
         await updateTable(
           seat.tableId,
           seat.reservationId,
@@ -55,7 +57,6 @@ const SeatReservation = ({ errorHandler }) => {
 
         errorHandler(null);
       } catch (error) {
-        console.log(error);
         error && errorHandler(error);
       }
     };

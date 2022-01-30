@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { updateStatus } from "../utils/api";
 
@@ -21,7 +21,6 @@ const ReservationCard = ({ reservation, errorHandler }) => {
         "Do you want to cancel this reservation? This cannot be undone."
       )
     ) {
-      console.log("Confirmed!");
       try {
         const abortController = new AbortController();
 
@@ -34,8 +33,6 @@ const ReservationCard = ({ reservation, errorHandler }) => {
         errorHandler(null);
         history.go();
       } catch (error) {
-        console.log(error);
-        // setTableError(error);
         error && errorHandler(error);
       }
     }

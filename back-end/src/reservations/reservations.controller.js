@@ -18,6 +18,7 @@ const hasValidProperties = (req, res, next) => {
   next();
 };
 
+// Checks if first_name is missing
 const hasFirstName = (req, res, next) => {
   const { data: { first_name } = {} } = req.body;
 
@@ -30,6 +31,7 @@ const hasFirstName = (req, res, next) => {
   next();
 };
 
+// Checks if last_name is missing
 const hasLastName = (req, res, next) => {
   const { data: { last_name } = {} } = req.body;
 
@@ -42,6 +44,7 @@ const hasLastName = (req, res, next) => {
   next();
 };
 
+// Checks if mobile_number is missing
 const hasMobileNumber = (req, res, next) => {
   const { data: { mobile_number } = {} } = req.body;
 
@@ -56,6 +59,7 @@ const hasMobileNumber = (req, res, next) => {
 
 // DATE VALIDATORS --------------------------------------------------------------------
 
+// Checks if reservation_date is missing
 const hasDate = (req, res, next) => {
   const { data: { reservation_date } = {} } = req.body;
 
@@ -71,6 +75,7 @@ const hasDate = (req, res, next) => {
   next();
 };
 
+// Checks if reservation_date is a valid date
 const hasValidDate = (req, res, next) => {
   let isValid = new Date(res.locals.reservation_date).toString();
 
@@ -83,9 +88,12 @@ const hasValidDate = (req, res, next) => {
   next();
 };
 
+// Checks if reservation_date is not on Tuesday
 const dateNotAvailable = (req, res, next) => {
   let getDate = new Date(res.locals.reservation_date).getDay();
   let closedDay = 1;
+
+  console.log("getDate", getDate);
 
   if (getDate === closedDay) {
     return next({
@@ -96,13 +104,13 @@ const dateNotAvailable = (req, res, next) => {
   next();
 };
 
+// Checks if reservation_date is later than time of making the reservation
 const dateInFuture = (req, res, next) => {
   const { reservation_date, reservation_time } = req.body.data;
 
   const today = new Date();
   const validDate = new Date(`${reservation_date} ${reservation_time}`);
 
-  console.log("today", today);
   console.log("validDate", validDate);
 
   if (validDate < today) {
@@ -116,6 +124,7 @@ const dateInFuture = (req, res, next) => {
 
 // TIME VALIDATORS --------------------------------------------------------------------
 
+// Checks if reservation_time is missing
 const hasTime = (req, res, next) => {
   const { data: { reservation_time } = {} } = req.body;
 
@@ -131,6 +140,7 @@ const hasTime = (req, res, next) => {
   next();
 };
 
+// Checks if reservation_time is an actual time format
 const hasValidTime = (req, res, next) => {
   const isValid = res.locals.reservation_time.match(
     /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
@@ -146,6 +156,7 @@ const hasValidTime = (req, res, next) => {
   next();
 };
 
+// Checks if reservation_time is made between 10:30am - 09:30pm
 const timeIsFuture = (req, res, next) => {
   const reservationHours = { start: "10:29:59", end: "21:29:59" };
 
@@ -163,6 +174,7 @@ const timeIsFuture = (req, res, next) => {
 
 // PEOPLE VALIDATORS --------------------------------------------------------------------
 
+// Checks if people is missing
 const hasPeople = (req, res, next) => {
   const { data: { people } = {} } = req.body;
 
@@ -178,6 +190,7 @@ const hasPeople = (req, res, next) => {
   next();
 };
 
+// Checks if people is at least 1 or more
 const hasMinPeople = (req, res, next) => {
   let people = res.locals.people;
 
@@ -190,6 +203,7 @@ const hasMinPeople = (req, res, next) => {
   next();
 };
 
+// Checks if people is a number
 const peopleIsValid = (req, res, next) => {
   let isValid = res.locals.people;
 
@@ -202,25 +216,7 @@ const peopleIsValid = (req, res, next) => {
   next();
 };
 
-const reservationExists = async (req, res, next) => {
-  const { reservationId } = req.params;
-  // console.log("params", req.params);
-  // console.log("reservation ID:", reservationId);
-
-  const reservation = await reservationsService.read(reservationId);
-
-  // console.log("reservationExists:", reservation);
-
-  if (reservation) {
-    res.locals.reservation = reservation;
-    return next();
-  }
-
-  next({
-    status: 404,
-    message: `Reservation with ID ${reservationId} not found.`,
-  });
-};
+// STATUS VALIDATORS --------------------------------------------------------------------
 
 // veryify if status from the body is a valid status
 const validateStatus = async (req, res, next) => {
@@ -239,6 +235,7 @@ const validateStatus = async (req, res, next) => {
   next();
 };
 
+// Return error if status is "finished"
 const isFinished = (req, res, next) => {
   const { status } = res.locals.reservation;
 
@@ -252,9 +249,9 @@ const isFinished = (req, res, next) => {
   next();
 };
 
+// Return error if status is "booked"
 const isBooked = (req, res, next) => {
   const { status } = req.body.data;
-  console.error("STATUS:", status);
 
   if (status) {
     if (status !== "booked") {
@@ -267,15 +264,32 @@ const isBooked = (req, res, next) => {
   next();
 };
 
+// Check is reservation_id exists
+const reservationExists = async (req, res, next) => {
+  const { reservationId } = req.params;
+
+  const reservation = await reservationsService.read(reservationId);
+
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  }
+
+  next({
+    status: 404,
+    message: `Reservation with ID ${reservationId} not found.`,
+  });
+};
+
 /*
 --------------------------------------------------------------------------------
 Resource Handlers
 --------------------------------------------------------------------------------
 */
 
-/* List handler for reservation resources
-      /GET
- */
+// List handler for reservation resources
+// /GET
+
 const list = async (req, res) => {
   const date = req.query.date;
   const { mobile_number } = req.query;
@@ -293,9 +307,8 @@ const list = async (req, res) => {
   res.json({ data });
 };
 
-/* Create reservation handler
-      /POST
-*/
+// Create reservation handler
+// /POST
 
 const create = async (req, res, next) => {
   try {
@@ -307,6 +320,9 @@ const create = async (req, res, next) => {
   }
 };
 
+// Update reservation handler
+// /PUT
+
 const update = async (req, res, next) => {
   const { reservation_id } = res.locals.reservation;
 
@@ -317,19 +333,23 @@ const update = async (req, res, next) => {
   res.json({ data });
 };
 
+// Read reservation handler
+// /GET
+
 const read = (req, res, next) => {
   const data = res.locals.reservation;
 
   res.json({ data });
 };
 
+// Update reservation status handler
+// /PUT
+
 const updateStatus = async (req, res, next) => {
   const { reservation_id } = res.locals.reservation;
   const { status } = req.body.data;
 
   const data = await reservationsService.updateStatus(reservation_id, status);
-
-  console.log("updateStatus DATA:", data);
 
   res.json({ data });
 };

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 /**
  * Defines the menu for this application.
@@ -8,17 +8,25 @@ import { Link } from "react-router-dom";
  */
 
 function Menu() {
+  const history = useHistory();
+
   const [activeLink, setActiveLink] = useState("dashboard");
 
-  // Set state for active link for the route theuser is currently one
+  // The active link style is shown based on the current location
+  useEffect(() => {
+    const { pathname } = history.location;
+    setActiveLink(pathname);
+  }, [activeLink, history]);
+
+  // Set state for active link for the route the user is currently on or to /dashbaord if clicking on Brand name
   const handleActiveLink = ({ target }) => {
-    if (!target.id && target.innerText === "Periodic Tables") {
-      // console.log(target.id);
-      return setActiveLink("dashboard");
+    if (!target.id && target.name === "/dashboard") {
+      return setActiveLink("/dashboard");
     }
-    setActiveLink(target.id);
+    setActiveLink();
   };
 
+  // Links update styles for states of default, hover, and active location
   return (
     <nav className="navbar navbar-dark align-items-start p-0">
       <div className="container-fluid d-flex flex-column p-0">
@@ -27,7 +35,7 @@ function Menu() {
           to="/"
         >
           <div className="sidebar-brand-text mx-3" onClick={handleActiveLink}>
-            <span className="brand" name="dashboard">
+            <span className="brand" name="/dashboard">
               Periodic Tables
             </span>
           </div>
@@ -37,7 +45,7 @@ function Menu() {
           <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "dashboard"
+                activeLink === "/dashboard"
                   ? "nav-link slide-out active"
                   : "nav-link slide-out"
               }
@@ -52,7 +60,7 @@ function Menu() {
           <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "search"
+                activeLink === "/search"
                   ? "nav-link slide-out active"
                   : "nav-link slide-out"
               }
@@ -67,7 +75,7 @@ function Menu() {
           <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "reservations/new"
+                activeLink === "/reservations/new"
                   ? "nav-link slide-out active"
                   : "nav-link slide-out"
               }
@@ -82,7 +90,7 @@ function Menu() {
           <li className="nav-item col-12">
             <Link
               className={
-                activeLink === "tables/new"
+                activeLink === "/tables/new"
                   ? "nav-link slide-out active"
                   : "nav-link slide-out"
               }

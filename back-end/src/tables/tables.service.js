@@ -1,13 +1,16 @@
 const knex = require("../db/connection");
 
+// Gets all tables and sorts by table_name
 const list = () => {
   return knex("tables").select("*").groupBy("table_id").orderBy("table_name");
 };
 
+// Gets all tables and sorts by capacity
 const listByCapacity = () => {
   return knex("tables").select("*").groupBy("table_id").orderBy("capacity");
 };
 
+// Creates a new table record
 const create = (table) => {
   return knex("tables")
     .insert(table)
@@ -15,10 +18,12 @@ const create = (table) => {
     .then((createdRecords) => createdRecords[0]);
 };
 
+// Gets table data by table_id
 const read = (tableId) => {
   return knex("tables").select("*").where({ table_id: tableId }).first();
 };
 
+// Updates the reservation status to "seated" and adds the reservation_id to table.reservation_id
 const update = (table_id, reservation_id) => {
   return knex("reservations")
     .where({ reservation_id })
@@ -31,6 +36,7 @@ const update = (table_id, reservation_id) => {
     });
 };
 
+// Updates the reservation status to "finished" and sets the table.reservation_id back to null.
 const resetTable = (table_id, reservation_id) => {
   return knex("reservations")
     .where({ reservation_id })

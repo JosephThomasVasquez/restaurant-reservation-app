@@ -20,6 +20,7 @@ const Search = ({ errorHandler }) => {
     const abortController = new AbortController();
 
     try {
+      // Sends a GET request to the backend matching partial mobile_number numbers
       const response = await listReservations(
         { mobile_number: searchNumber },
         abortController.signal

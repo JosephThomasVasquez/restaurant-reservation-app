@@ -4,8 +4,6 @@ import { useHistory } from "react-router-dom";
 
 const TablesList = ({ tables, errorHandler }) => {
   const history = useHistory();
-
-  // const [finishTable, setFinishTable] = useState(null);
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
@@ -20,12 +18,12 @@ const TablesList = ({ tables, errorHandler }) => {
   }, []);
 
   const handleFinishTable = async (table) => {
-    console.log("table_id", table);
-
+    // Find the matching reservation_id from the returned reservations list
     const matchReservation = reservations.find(
       (reservation) => reservation.reservation_id === table.reservation_id
     );
 
+    // User confirmation before resetting the table reservation_id to null
     if (
       window.confirm(
         "Is this table ready to seat new guests? This cannot be undone."
@@ -43,13 +41,12 @@ const TablesList = ({ tables, errorHandler }) => {
         errorHandler(null);
         history.go();
       } catch (error) {
-        console.log(error);
-        // setTableError(error);
         error && errorHandler(error);
       }
     }
   };
 
+  // Conditional mapping of table elements based on if table is "free" or "occupied"
   const mapTables = tables.map((table) => (
     <div
       className={

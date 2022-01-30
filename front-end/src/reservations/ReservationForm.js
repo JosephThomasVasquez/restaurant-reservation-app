@@ -10,7 +10,7 @@ import BusinessHoursInfo from "../layout/businessHours/BusinessHoursInfo";
 const ReservationForm = ({ errorHandler }) => {
   const history = useHistory();
   const location = useLocation();
-  const reservationData = location.state?.reservation;
+  const reservationData = location.state?.reservation; // Gets reservation data from location state if it exists
 
   //   Set today's date as a default value for reservation state in the correct format yyyy/mm/dd
   const today = new Date().toISOString().split("T")[0];
@@ -29,6 +29,7 @@ const ReservationForm = ({ errorHandler }) => {
   useEffect(() => {
     const abortController = new AbortController();
 
+    // Get reservation by reservation_id and update input fields with reservation data
     const getReservation = async () => {
       try {
         const response = await readReservation(
@@ -58,7 +59,6 @@ const ReservationForm = ({ errorHandler }) => {
     // Make sure the people value is a number
     if (target.name === "people") {
       setReservation({ ...reservation, [target.name]: Number(target.value) });
-      console.log(reservation.reservation_date);
     } else {
       setReservation({ ...reservation, [target.name]: target.value });
     }
@@ -69,36 +69,33 @@ const ReservationForm = ({ errorHandler }) => {
 
     const submitReservation = async () => {
       const abortController = new AbortController();
-      //   errorHandler();
 
       try {
         if (reservationData) {
-          //   Send a POST request of the reservation to the backend
+          // Send a POST request of the reservation to the backend if reservationData exists
           const response = await updateReservation(
             reservation,
             abortController.abort()
           );
 
           setReservation(response);
-          // console.log("reservation:", reservation);
+
           history.push(`/dashboard?=${reservation.reservation_date}`);
           errorHandler(null);
         } else {
-          //   Send a POST request of the reservation to the backend
+          //   Send a POST request of the reservation to the backend if reservationData does not exists
           const response = await createReservation(
             reservation,
             abortController.abort()
           );
 
           setReservation(response);
-          // console.log("reservation:", reservation);
+
           history.push(`/dashboard?=${reservation.reservation_date}`);
           errorHandler(null);
         }
       } catch (error) {
-        console.log(error);
         error && errorHandler(error);
-        // console.log("error:", error);
       }
     };
 
