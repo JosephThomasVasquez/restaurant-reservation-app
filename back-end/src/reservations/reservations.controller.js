@@ -107,12 +107,33 @@ const dateInFuture = (req, res, next) => {
   const { reservation_date, reservation_time } = req.body.data;
 
   const today = new Date();
-  const validDate = new Date(`${reservation_date} ${reservation_time}`);
+  const utcToday = Date.UTC(
+    today.getUTCFullYear(),
+    today.getUTCMonth(),
+    today.getUTCDate(),
+    today.getUTCHours(),
+    today.getUTCMinutes(),
+    today.getUTCSeconds()
+  );
 
-  if (validDate < today) {
+  const todayAsUTC = new Date(utcToday);
+
+  const validDate = new Date(`${reservation_date} ${reservation_time}`);
+  const validUTCDate = Date.UTC(
+    validDate.getUTCFullYear(),
+    validDate.getUTCMonth(),
+    validDate.getUTCDate(),
+    validDate.getUTCHours(),
+    validDate.getUTCMinutes(),
+    validDate.getUTCSeconds()
+  );
+
+  const validDateAsUTC = new Date(validUTCDate);
+
+  if (validDateAsUTC < todayAsUTC) {
     return next({
       status: 400,
-      message: `Must select a date in the future.`,
+      message: `Must select a date in the future. Now:${todayAsUTC} Check:${validDateAsUTC}`,
     });
   }
   next();
