@@ -77,7 +77,7 @@ const hasDate = (req, res, next) => {
 
 // Checks if reservation_date is a valid date
 const hasValidDate = (req, res, next) => {
-  let isValid = new Date(res.locals.reservation_date).getUTCDay();
+  let isValid = new Date(res.locals.reservation_date).toUTCString();
 
   if (isValid === "Invalid Date") {
     return next({
