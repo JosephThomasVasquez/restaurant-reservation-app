@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Quicksand:wght@300;400;700&display=swap");
 
+:root {
+  --primary-color: rgba(224, 34, 0, 1);
+  --primary-color-hover: rgb(255, 82, 51);
+  --brand-color: rgba(255, 217, 47, 1);
+  --secondary-color: rgba(216, 130, 0, 1);
+  --secondary-color-hover: rgb(255, 177, 59);
+}
+
 body {
   font-family: "Oxygen", sans-serif;
   background-image: url("greek-vase.png");
@@ -9,10 +17,79 @@ h1 {
   font-weight: 700;
 }
 
+/* Bootstrap color override */
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--primary-color);
+  outline: 0 none;
+}
+
+.btn.btn-primary {
+  background: var(--primary-color);
+  outline: 0 none;
+}
+
+.btn.btn-primary:active,
+.btn.btn-primary:hover {
+  background-color: var(--primary-color-hover);
+  outline: 0 none;
+}
+
+.btn.btn-primary:focus {
+  background-color: var(--primary-color-hover);
+  border-color: var(--primary-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--primary-color);
+  outline: 0 none;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  background: var(--primary-color) !important;
+}
+
+.btn.btn-secondary {
+  background: var(--secondary-color);
+  outline: 0 none;
+}
+
+.btn.btn-secondary:active,
+.btn.btn-secondary:hover {
+  background-color: var(--secondary-color-hover);
+  outline: 0 none;
+}
+
+.btn.btn-secondary:focus {
+  background-color: var(--secondary-color-hover);
+  border-color: var(--secondary-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0 0 8px var(--secondary-color);
+  outline: 0 none;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
+  background: var(--secondary-color) !important;
+}
+
 /* NAV ----------------------------------------------------------------------------------------------------------- */
 
 .brand {
-  color: #ffd92f;
+  color: var(--brand-color);
 }
 
 .side-bar {
@@ -65,7 +142,7 @@ h1 {
 }
 
 .active {
-  color: rgb(255, 166, 83) !important;
+  color: var(--secondary-color) !important;
   background-color: rgb(78, 28, 11);
   background: linear-gradient(0deg, rgb(26, 9, 3) 0%, rgb(78, 28, 11) 100%);
   border-radius: 5px;
@@ -113,7 +190,7 @@ h1 {
 
 .list-day-closed {
   font-weight: 700;
-  color: rgb(255, 166, 83);
+  color: var(--secondary-color);
 }
 
 /* RESERVATION CARD -------------------------------------------------------------------------------------------------- */

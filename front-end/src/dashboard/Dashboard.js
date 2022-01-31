@@ -70,7 +70,9 @@ function Dashboard({ date, errorHandler }) {
                 <span className="reservation-count">{reservations.length}</span>
                 &nbsp;reservations
               </span>
-            ) : null}
+            ) : (
+              <div className="mx-3 text-center mt-4">No reservations</div>
+            )}
           </span>
         </div>
       </div>
