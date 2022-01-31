@@ -130,10 +130,10 @@ const dateInFuture = (req, res, next) => {
 
   const validDateAsUTC = new Date(validUTCDate);
 
-  if (validDateAsUTC < todayAsUTC) {
+  if (validDateAsUTC < today) {
     return next({
       status: 400,
-      message: `Must select a date in the future. Now:${todayAsUTC} Check:${validDateAsUTC}`,
+      message: `Must select a date in the future.`,
     });
   }
   next();
