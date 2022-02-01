@@ -1,16 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Quicksand:wght@300;400;700&display=swap");
 
 :root {
+  --brand-color: rgba(255, 217, 47, 1);
+
   --primary-color: rgba(224, 34, 0, 1);
   --primary-color-hover: rgb(255, 82, 51);
-  --brand-color: rgba(255, 217, 47, 1);
+
   --secondary-color: rgba(216, 130, 0, 1);
   --secondary-color-hover: rgb(255, 177, 59);
 }
 
 body {
   font-family: "Oxygen", sans-serif;
-  background-image: url("greek-vase.png");
+  background-image: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.25) 25%,
+      rgba(255, 177, 59, 0.25) 100%
+    ),
+    url("../images/greek-vase.png");
+  background-size: contain;
+  background-attachment: fixed;
 }
 
 h1 {
@@ -18,6 +27,23 @@ h1 {
 }
 
 /* Bootstrap color override */
+
+.alert {
+  height: 50px;
+}
+
+.alert:hover {
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 1) inset;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  border: 1px solid var(--primary-color);
+  -webkit-box-shadow: 0 0 0 30px rgb(255, 237, 234) inset !important;
+}
 
 textarea:focus,
 input[type="text"]:focus,
@@ -39,6 +65,7 @@ input[type="color"]:focus,
 
 .btn.btn-primary {
   background: var(--primary-color);
+  border: none;
   outline: 0 none;
 }
 
@@ -63,6 +90,7 @@ input[type="color"]:focus,
 
 .btn.btn-secondary {
   background: var(--secondary-color);
+  border: none;
   outline: 0 none;
 }
 
@@ -113,7 +141,8 @@ input[type="color"]:focus,
 }
 
 .nav-link,
-.btn {
+.btn,
+.alert {
   transition: all 0.25s ease-out;
 }
 

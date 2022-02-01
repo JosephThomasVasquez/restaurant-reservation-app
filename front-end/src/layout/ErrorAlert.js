@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 /**
  * Defines the alert message to render if the specified error is truthy.
@@ -9,24 +9,41 @@ import React from "react";
  */
 
 function ErrorAlert({ error }) {
+  const [displayError, setDisplayError] = useState("hide");
+
+  useEffect(() => {
+    if (error) {
+      setDisplayError("show");
+    } else {
+      setDisplayError("hide");
+    }
+  }, [error]);
+
+  const handleDisplayError = () => {
+    setDisplayError("hide");
+  };
+
   // Modified Bootstrap Alert componenet to have a close button 'x'
-  return (
-    error && (
-      <div
-        className="alert alert-danger mt-3 alert-dismissible fade show"
-        role="alert"
+  return error ? (
+    <div
+      className={`alert alert-danger my-3 alert-dismissible shadow fade ${displayError}`}
+      role="alert"
+    >
+      <span className="font-weight-bold"> Error:</span> {error.message}
+      <button
+        type="button"
+        className="close"
+        aria-label="Close"
+        onClick={handleDisplayError}
       >
-        Error: {error.message}
-        <button
-          type="button"
-          className="close"
-          data-dismiss="alert"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    )
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  ) : (
+    <div
+      className={`alert alert-danger my-3 alert-dismissible fade ${displayError}`}
+      role="alert"
+    ></div>
   );
 }
 
