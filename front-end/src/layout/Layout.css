@@ -8,6 +8,9 @@
 
   --secondary-color: rgba(216, 130, 0, 1);
   --secondary-color-hover: rgb(255, 177, 59);
+
+  --info-color: rgba(43, 15, 6, 1);
+  --info-color-hover: rgb(134, 46, 19);
 }
 
 body {
@@ -112,6 +115,31 @@ input[type="color"]:focus,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show > .btn-secondary.dropdown-toggle {
   background: var(--secondary-color) !important;
+}
+
+.btn.btn-info {
+  background: var(--info-color);
+  border: none;
+  outline: 0 none;
+}
+
+.btn.btn-info:active,
+.btn.btn-info:hover {
+  background-color: var(--info-color-hover);
+  outline: 0 none;
+}
+
+.btn.btn-info:focus {
+  background-color: var(--info-color-hover);
+  border-color: var(--info-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--info-color);
+  outline: 0 none;
+}
+
+.btn-info:not(:disabled):not(.disabled).active,
+.btn-info:not(:disabled):not(.disabled):active,
+.show > .btn-info.dropdown-toggle {
+  background: var(--info-color) !important;
 }
 
 /* NAV ----------------------------------------------------------------------------------------------------------- */
@@ -229,8 +257,8 @@ input[type="color"]:focus,
 }
 
 .card-header {
-  background-color: rgb(43, 15, 6);
-  color: white;
+  background-color: rgba(216, 130, 0, 0.1);
+  color: rgb(43, 15, 6);
   border-radius: 10px 10px 0 0 !important;
   padding: 4px;
   text-align: center;
@@ -238,11 +266,12 @@ input[type="color"]:focus,
 
 .reservation-card {
   min-width: 300px;
-  background: rgb(37, 26, 22);
+  max-width: 400px;
+  background: rgb(37, 30, 22);
   background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgb(255, 239, 233) 100%
+    135deg,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(255, 223, 176, 0.25) 100%
   );
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -255,9 +284,9 @@ input[type="color"]:focus,
 
   background: rgb(37, 26, 22);
   background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgb(255, 239, 233) 100%
+    135deg,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(255, 223, 176, 0.25) 100%
   );
   border-radius: 10px;
   border: 1px solid rgba(224, 34, 0, 1);
@@ -288,9 +317,14 @@ input[type="color"]:focus,
   );
 }
 
+.tables-container {
+  min-width: 300px;
+  max-width: 520px;
+}
+
 .tables-header {
-  background-color: rgb(43, 15, 6);
-  color: white;
+  background-color: var(--info-color);
+  color: var(--secondary-color-hover);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
   width: 100%;

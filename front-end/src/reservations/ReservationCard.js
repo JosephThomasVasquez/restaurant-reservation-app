@@ -39,7 +39,7 @@ const ReservationCard = ({ reservation, errorHandler }) => {
   };
 
   return (
-    <div className="card col-md-3 col-sm-12 col shadow m-3 p-0 reservation-card">
+    <div className="card col-md-3 col shadow m-3 p-0 reservation-card">
       <h5 className="card-header font-weight-bold">
         {first_name} {last_name}
       </h5>

@@ -91,7 +91,7 @@ function Dashboard({ date, errorHandler }) {
         <div className="col-md-2 col-sm-3 col-xs-12 col">
           <button
             name="today"
-            className="btn btn-secondary btn-sm btn-block"
+            className="btn btn-primary btn-sm btn-block"
             onClick={handleDateChange}
           >
             Today
@@ -109,16 +109,18 @@ function Dashboard({ date, errorHandler }) {
         </div>
       </div>
 
-      <div className="container-fluid m-0 p-0">
-        <div className="row">
-          <div className="col-lg-9 col-md-8 col-sm-12 col m-0 p-0">
+      <div className="container-fluid m-0 p-0 text-center">
+        <div className="row d-flex justify-content-center">
+          <div className="col m-0 px-3 tables-container">
+            <TablesList tables={tables} errorHandler={errorHandler} />
+          </div>
+        </div>
+        <div className="row d-flex justify-content-center">
+          <div className="col">
             <ReservationList
               reservations={reservations}
               errorHandler={errorHandler}
             />
-          </div>
-          <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 col m-0 p-0 pr-3">
-            <TablesList tables={tables} errorHandler={errorHandler} />
           </div>
         </div>
       </div>

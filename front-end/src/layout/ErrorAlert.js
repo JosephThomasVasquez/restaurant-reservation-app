@@ -30,14 +30,16 @@ function ErrorAlert({ error }) {
       role="alert"
     >
       <span className="font-weight-bold"> Error:</span> {error.message}
-      <button
-        type="button"
-        className="close"
-        aria-label="Close"
-        onClick={handleDisplayError}
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
+      {displayError === "show" ? (
+        <button
+          type="button"
+          className="close"
+          aria-label="Close"
+          onClick={handleDisplayError}
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      ) : null}
     </div>
   ) : (
     <div

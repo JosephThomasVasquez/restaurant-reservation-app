@@ -12,7 +12,7 @@ const ReservationList = ({ reservations, errorHandler }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">{mapReservations}</div>
+      <div className="row d-flex justify-content-center">{mapReservations}</div>
     </div>
   );
 };

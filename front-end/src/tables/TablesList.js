@@ -14,6 +14,7 @@ const TablesList = ({ tables, errorHandler }) => {
       .catch((error) => {
         errorHandler(error);
       });
+
     return () => abortController.abort();
   }, []);
 
@@ -51,8 +52,8 @@ const TablesList = ({ tables, errorHandler }) => {
     <div
       className={
         table.reservation_id
-          ? "row p-0 m-0 py-3 table-item-occupied d-flex align-items-center"
-          : "row p-0 m-0 py-3 table-item"
+          ? "row p-0 m-0 py-1 table-item-occupied d-flex align-items-center"
+          : "row p-0 m-0 py-1 table-item"
       }
       key={table.table_id}
     >
@@ -87,7 +88,7 @@ const TablesList = ({ tables, errorHandler }) => {
         </div>
       </div>
       <div className="row">
-        <div className=" w-100">{mapTables}</div>
+        <div className="d-flex flex-column w-100">{mapTables}</div>
       </div>
     </div>
   );
