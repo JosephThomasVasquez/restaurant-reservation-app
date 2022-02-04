@@ -394,3 +394,14 @@ input[type="color"]:focus,
   color: #ffffff;
   background-color: #f3969a;
 }
+
+.search-input {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+.find-button {
+  min-width: 60px;
+  max-width: 60px;
+}

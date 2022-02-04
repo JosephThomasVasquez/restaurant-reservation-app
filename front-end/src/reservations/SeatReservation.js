@@ -87,7 +87,7 @@ const SeatReservation = ({ errorHandler }) => {
         <div className="row">
           <div className="col text-center">Table Name - Table Capacity</div>
         </div>
-        <div className="row d-flex justify-content-center">
+        <div className="row d-flex justify-content-center mt-3">
           <div className="col-md-4 col-lg-4 mb-3 text-center">
             <select
               className="form-control custom-select selectpicker show-tick"

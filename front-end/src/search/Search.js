@@ -46,28 +46,25 @@ const Search = ({ errorHandler }) => {
         <div className="col text-center">Search by phone number</div>
       </div>
       <div className="row d-flex justify-content-center">
-        <div className="col-sm-3 pr-0 mt-3">
+        <form onSubmit={handleSearch} className="form-inline mt-3">
           <input
             type="tel"
             name="mobile_number"
             id="mobile_number"
             placeholder="Enter a customer's phone number"
             min="2"
-            className="form-control"
+            className="form-control search-input"
             value={searchNumber}
             onChange={handleChange}
-            required
           />
-        </div>
-        <div className="col-lg-1 col-md-2 col-sm-2 px-0 mt-3">
           <button
-            type="button"
-            className="btn btn-primary form-control"
-            onClick={handleSearch}
+            type="submit"
+            className="btn btn-primary form-control find-button"
           >
             Find
           </button>
-        </div>
+        </form>
+        {/* <div className="col-lg-1 col-md-2 col-sm-2 px-0 mt-3"></div> */}
         <div className="col-12 text-center">
           {reservations.length > 0 ? (
             <ReservationList reservations={reservations} />
