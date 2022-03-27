@@ -4,7 +4,7 @@
 
 ## <span style="color:#ffd92f">Description</span>
 
-The Restaurant Reservation System is a complete Full-stack application for managing reservations and tables. You can create, edit, cancel, and seat reservations to a table. The dashboard displays the reservations for the current date or and you can go backward or forward by day to display reservations from another date. All reservations show the persons first and last name, mobile number, time of reservations, guest count, and status. You can also create tables and seat reservations to an available table with real time updates using React.
+The Restaurant Reservation System is a complete Full-stack application for managing reservations and tables. You can create, edit, cancel, and seat reservations to a table. The dashboard displays the reservations for the current date and you can go backward or forward by day to display reservations from another date. All reservations show the persons first and last name, mobile number, time of reservations, guest count, and status. You can also create tables and seat reservations to an available table with real time updates using React.
 
 ### <span style="color:#ffb13b">**Reservation** features</span>:
 
