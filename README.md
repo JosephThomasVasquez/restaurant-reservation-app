@@ -1,6 +1,8 @@
-# <span style="color:#ffd92f">Restaurant Reservation System</span>
+# <span style="color:#ffd92f">Periodic Tables</span>
 
-# Demo here: [Perodic Tables](https://jv-restaurant-client.herokuapp.com/dashboard)
+## <span style="color:#ffd92f">Restaurant Reservation System</span>
+
+# Demo here: [Periodic Tables](https://jv-restaurant-client.herokuapp.com/dashboard)
 
 ## <span style="color:#ffd92f">Description</span>
 
